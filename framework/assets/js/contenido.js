@@ -203,6 +203,7 @@ FD.INDICE = [
     {a:"ciclo",          t:"23 · Ciclo de campaña — las diez estaciones de una vuelta completa"},
     {a:"ciclo",          t:"24 · Cuadro de materiales — qué comunicar, no cuántas piezas"},
     {a:"implementacion", t:"25 · Implementación y tracking — las seis compuertas de QA"},
+    {a:"first-party",    t:"25.1—25.3 · First-Party Data — de Pixel + API a valor confirmado"},
     {a:"cierres",        t:"42 · Cierre mensual — el informe es una salida del cierre, no el cierre"},
     {a:"cierres",        t:"43 · Cierre de periodo o contrato — continuidad, accesos y aprendizajes"}
   ]},
@@ -215,6 +216,7 @@ FD.INDICE = [
   ]},
   {f:"reaccion", a:"reaccion", n:"34—41", t:"Optimización de performance", items:[
     {a:"reaccion",  t:"34 · Los cuatro momentos: dudar, mirar, mover, registrar"},
+    {a:"ciclo-semanal", t:"34.1 · Sistema operativo semanal — Health, Diagnosis, Experiments y Decisions"},
     {a:"reaccion",  t:"35 · Etapa 1 — validar la alerta y no optimizar por ruido"},
     {a:"reaccion",  t:"36 · Etapa 2 — negocio, categoría, comercial, creatividad y plataforma"},
     {a:"localizar", t:"37 · Cadena de localización — dónde se rompe el resultado"},
@@ -238,10 +240,10 @@ FD.INDICE = [
     {a:"priorizacion",     t:"86 · Sistema de priorización de solicitudes y tiempos de gestión"},
     {a:"ruta",             t:"87 · Ruta de la solicitud — de la recepción al cierre"},
     {a:"seguimiento",      t:"88 · Ciclo de seguimiento: bitácora y consumos"},
-    {a:"testeo",           t:"89 · Proceso de testeo de variables digitales"},
+    {a:"testeo",           t:"89 · Testeo, repositorio de experimentos y Creative Scorecard"},
     {a:"matriz",           t:"90 · Matriz de fusión de variables y combinador"},
     {a:"ejemplo",          t:"91 · Ejemplo de planteamiento de optimización"},
-    {a:"estructura-medio", t:"92 · Estructura de campaña en Meta y en Google"}
+    {a:"estructura-medio", t:"92 · Estructuras simples: producción consolidada y tests justificados"}
   ]},
   {f:"reaccion", a:"playbooks", n:"44—57", t:"Playbooks de reacción", items:[
     {a:"playbooks",    t:"44—45 · Los cuatro momentos de un playbook"},
@@ -278,6 +280,7 @@ FD.INDICE = [
   ]},
   {f:"sistema", a:"futuro", n:"83—85", t:"Próximas iteraciones", items:[
     {a:"futuro",         t:"83 · Qué se construye en la versión 0.4"},
+    {a:"madurez-medicion", t:"83.1 · Roadmap de medición — atribución hoy; incrementalidad y MMM a futuro"},
     {a:"criterio-exito", t:"84 · Criterio de éxito del framework"},
     {a:"cierre-title",   t:"85 · Principio final"}
   ]}

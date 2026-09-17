@@ -43,7 +43,7 @@ Un documento de framework equivalente en cualquier otra agencia describe el proc
 - Índice, tablero de cuentas y requisitos de solicitud se pintan desde `assets/js/contenido.js`.
 - Resaltado automático del enlace activo del menú por observación de secciones.
 - **Dos niveles de búsqueda.** El buscador global del hero (`#q`) consulta títulos y texto completo,
-  se abre desde el header, `/` o `Ctrl+K`; el buscador del índice (`#toc-q`) filtra las 91 entradas
+  se abre desde el header, `/` o `Ctrl+K`; el buscador del índice (`#toc-q`) filtra las 94 entradas
   por familia y conserva su contador y estado vacío.
 
 **Restricciones durables**
