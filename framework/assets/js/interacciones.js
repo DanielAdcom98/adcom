@@ -13,6 +13,15 @@
 
   /* ---------- reveal on scroll ---------- */
   var revealables = $$("[data-reveal]");
+  /* Stagger inspirado en inView/stagger: cada grupo entra como una secuencia
+     legible, no como una pared de tarjetas que aparece al mismo tiempo. */
+  var staggerGroups = $$(".grid-2[data-reveal],.grid-3[data-reveal],.phases[data-reveal],.pillars[data-reveal],.split[data-reveal],.quadrant[data-reveal],.result-journey[data-reveal],.scenario-journey[data-reveal]");
+  staggerGroups.forEach(function(group){
+    group.classList.add("motion-stagger");
+    Array.prototype.forEach.call(group.children, function(child, i){
+      child.style.setProperty("--stagger-delay", (i * 55) + "ms");
+    });
+  });
   if ("IntersectionObserver" in window){
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
@@ -75,6 +84,11 @@
   var headerSearch = $("#header-search"), globalSearch = $("#q");
   if (headerSearch && globalSearch){
     headerSearch.addEventListener("click", function(){
+      var commandDialog = $("#command-dialog");
+      if (commandDialog && typeof commandDialog.showModal === "function"){
+        document.dispatchEvent(new CustomEvent("open-command"));
+        return;
+      }
       if (header && header.classList.contains("nav-abierto")){
         header.classList.remove("nav-abierto");
         toggle.setAttribute("aria-expanded","false");
@@ -272,9 +286,31 @@
   }
   setRepo(0);
 
+  /* Motion-style view transitions for native details. The DOM remains native
+     and accessible; supported browsers animate the layout, others toggle as usual. */
+  function enlazarDetalleMotion(detail, siblings){
+    var summary = detail && detail.querySelector ? detail.querySelector("summary") : null;
+    if (!summary) return;
+    summary.addEventListener("click", function(e){
+      if (e.target.closest && e.target.closest("a")) return;
+      e.preventDefault();
+      var next = !detail.open;
+      FD.viewTransition(function(){
+        detail.open = next;
+        if (next && siblings) siblings.forEach(function(other){ if (other !== detail) other.open = false; });
+      });
+    });
+  }
+
   /* ---------- acordeón exclusivo de interfaces ---------- */
+  document.addEventListener("pointerdown", function(e){
+    var target = e.target && e.target.closest ? e.target.closest("button,[role=\"tab\"],summary") : null;
+    if (target) FD.pressSpring(target);
+  }, {passive:true});
+
   var ifaces = $$(".iface");
   ifaces.forEach(function(d){
+    enlazarDetalleMotion(d, ifaces);
     d.addEventListener("toggle", function(){
       if (d.open) ifaces.forEach(function(o){ if(o!==d) o.open = false; });
     });
@@ -288,19 +324,22 @@
     FD.FAMILIAS.forEach(function(fam){
       var suyos = FD.INDICE.filter(function(b){ return b.f === fam.id; });
       if (!suyos.length) return;
-      var sec = document.createElement("section");
+      var sec = document.createElement("details");
       sec.className = "toc-fam";
       sec.setAttribute("data-fam", fam.id);
+      sec.open = fam.id === FD.FAMILIAS[0].id;
       var total = suyos.reduce(function(n, b){ return n + b.items.length; }, 0);
-      var h = '<header class="toc-fam-h"><span>' + fam.r + '</span><b>' + fam.t +
-              '</b><small>' + fam.d + ' · ' + total + ' entradas</small></header><div class="toc-grid">';
-      suyos.forEach(function(b){
-        h += '<article class="toc-block"><a class="toc-h" href="#' + b.a + '"><b>' + b.n + '</b>' + b.t + '</a><ul class="toc-list">';
+      var h = '<summary class="toc-fam-h"><span>' + fam.r + '</span><b>' + fam.t +
+              '</b><small>' + fam.d + ' · ' + total + ' entradas</small></summary><div class="toc-grid">';
+      suyos.forEach(function(b, blockIndex){
+        h += '<details class="toc-block"' + (blockIndex === 0 ? ' open' : '') + '><summary class="toc-h"><span><b>' + b.n + '</b>' + b.t + '</span><a class="toc-h-go" href="#' + b.a + '" aria-label="Ir al punto ' + b.n + '">↗</a></summary><ul class="toc-list">';
         b.items.forEach(function(it){ h += '<li><a href="#' + it.a + '">' + it.t + '</a></li>'; });
-        h += '</ul></article>';
+        h += '</ul></details>';
       });
       sec.innerHTML = h + '</div>';
       toc.appendChild(sec);
+      enlazarDetalleMotion(sec);
+      $$(".toc-block", sec).forEach(function(block){ enlazarDetalleMotion(block); });
       grupos.push({
         el: sec, fam: fam, total: total,
         bloques: $$(".toc-block", sec).map(function(bl){
@@ -367,9 +406,11 @@
             if (on) propios++;
           });
           b.el.classList.toggle("is-hidden", propios === 0);
+          if (termino && propios > 0) b.el.open = true;
           enGrupo += propios;
         });
         g.el.classList.toggle("is-hidden", !deLaFamilia || enGrupo === 0);
+        if ((termino && enGrupo > 0) || (porFamilia && deLaFamilia)) g.el.open = true;
         if (deLaFamilia) visibles += enGrupo;
       });
       fichas.forEach(function(f){
@@ -387,6 +428,9 @@
     campo.addEventListener("search", filtrar);
     filtrar();
   }
+
+  /* Motion view transitions for long native disclosure blocks. */
+  $$("details.mas").forEach(function(d){ enlazarDetalleMotion(d); });
 
   /* ---------- botón de vuelta al índice ---------- */
   var alIndice = $("#al-indice");
@@ -413,7 +457,9 @@
       $("#sol-pregunta").textContent = x.pregunta;
       fillList($("#sol-min"), x.min);
       fillChips($("#sol-des"), x.des);
-      $("#sol-sale").textContent = x.sale + " · " + x.horas;
+      $("#sol-sale").textContent = x.sale;
+      var sla = $("#sol-sla");
+      if (sla) sla.textContent = x.sla;
       $("#sol-conecta").textContent = x.conecta;
       $("#sol-nota").textContent = x.nota;
       $$("#sol-list .repo-item").forEach(function(b, k){
@@ -453,7 +499,7 @@
       l.push("SUMA VALOR (opcional)");
       x.des.forEach(function(d){ l.push("- " + d + ":"); });
       l.push("");
-      l.push("Entregable esperado: " + x.sale + " · tiempo de gestión estimado: " + x.horas);
+      l.push("Entregable esperado: " + x.sale + " · SLA estimado: " + x.sla);
       return l.join("\n");
     }
     $("#sol-copy").addEventListener("click", function(){
@@ -581,6 +627,11 @@
       var atajo = (e.key === "/" && !en) || ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K"));
       if (!atajo) return;
       e.preventDefault();
+      var commandDialog = $("#command-dialog");
+      if (commandDialog && typeof commandDialog.showModal === "function"){
+        document.dispatchEvent(new CustomEvent("open-command"));
+        return;
+      }
       campo.scrollIntoView({ behavior: FD.menosMovimiento() ? "auto" : "smooth", block: "center" });
       campo.focus(); campo.select();
     });
@@ -588,5 +639,159 @@
     /* llegar con ?q= ya buscando */
     var q = (location.search.match(/[?&]q=([^&]*)/) || [])[1];
     if (q){ campo.value = decodeURIComponent(q.replace(/\+/g," ")); buscar(); }
+  })();
+
+  /* ---------- filtro de conexiones (Tabs) ---------- */
+  (function(){
+    var rail = $("#interfaces-tabs"), area = $("#interfaces");
+    if (!rail || !area) return;
+    var cards = $$("details.iface", area);
+    if (!cards.length) return;
+    var tabs = [];
+    function crear(label, i){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "iface-tab"; b.textContent = label;
+      b.setAttribute("role", "tab"); b.setAttribute("aria-selected", i === -1 ? "true" : "false");
+      b.addEventListener("click", function(){ seleccionar(i); });
+      rail.appendChild(b); tabs.push(b);
+    }
+    crear("Todas", -1);
+    cards.forEach(function(card, i){
+      card.setAttribute("data-connection", String(i));
+      var title = card.querySelector("summary h3");
+      crear(title ? title.textContent.replace("Digital ↔ ", "") : "Conexión " + (i + 1), i);
+    });
+    function seleccionar(i){
+      tabs.forEach(function(tab, n){
+        var on = (i === -1 && n === 0) || (i === n - 1);
+        tab.classList.toggle("is-active", on);
+        tab.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      cards.forEach(function(card, n){
+        card.classList.toggle("is-tab-hidden", i !== -1 && n !== i);
+        if (i === n) card.open = true;
+      });
+    }
+    seleccionar(-1);
+  })();
+
+  /* ---------- carrusel resumen ---------- */
+  (function(){
+    var track = $("#summary-carousel"), prev = $("#summary-prev"), next = $("#summary-next"), dots = $("#summary-dots"), count = $("#summary-count");
+    if (!track || !prev || !next || !dots) return;
+    var cards = $$("[data-summary-card]", track), active = 0, frame = 0;
+    if (!cards.length) return;
+
+    cards.forEach(function(card, i){
+      var dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "summary-dot" + (i === 0 ? " is-active" : "");
+      dot.setAttribute("role", "tab");
+      dot.setAttribute("aria-label", "Ir a la idea " + String(i + 1).padStart(2, "0"));
+      dot.setAttribute("aria-selected", i === 0 ? "true" : "false");
+      dot.addEventListener("click", function(){ irA(i); });
+      dots.appendChild(dot);
+    });
+    var dotEls = $$(".summary-dot", dots);
+
+    function actualizar(i){
+      active = Math.max(0, Math.min(cards.length - 1, i));
+      dotEls.forEach(function(dot, n){
+        var on = n === active;
+        dot.classList.toggle("is-active", on);
+        dot.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      if (count) count.textContent = String(active + 1).padStart(2, "0") + " / " + String(cards.length).padStart(2, "0");
+      prev.disabled = active === 0;
+      next.disabled = active === cards.length - 1;
+    }
+    function irA(i){
+      var card = cards[i];
+      if (!card) return;
+      track.scrollTo({left: Math.max(0, card.offsetLeft - track.offsetLeft), behavior: FD.menosMovimiento() ? "auto" : "smooth"});
+      actualizar(i);
+    }
+    function leerActivo(){
+      var objetivo = track.scrollLeft + 20, elegido = 0, distancia = Infinity;
+      cards.forEach(function(card, i){
+        var d = Math.abs((card.offsetLeft - track.offsetLeft) - objetivo);
+        if (d < distancia){ distancia = d; elegido = i; }
+      });
+      actualizar(elegido);
+    }
+    prev.addEventListener("click", function(){ irA(active - 1); });
+    next.addEventListener("click", function(){ irA(active + 1); });
+    track.addEventListener("scroll", function(){
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(leerActivo);
+    }, {passive:true});
+    track.addEventListener("keydown", function(e){
+      if (e.key === "ArrowRight"){ e.preventDefault(); irA(active + 1); }
+      if (e.key === "ArrowLeft"){ e.preventDefault(); irA(active - 1); }
+      if (e.key === "Home"){ e.preventDefault(); irA(0); }
+      if (e.key === "End"){ e.preventDefault(); irA(cards.length - 1); }
+    });
+    window.addEventListener("resize", function(){ actualizar(active); }, {passive:true});
+    actualizar(0);
+  })();
+
+  /* ---------- command palette · CommandDialog sin dependencia ---------- */
+  (function(){
+    var dialog = $("#command-dialog"), input = $("#command-q"), results = $("#command-results");
+    if (!dialog || !input || !results) return;
+    var globalSearch = $("#q"), globalResults = $("#q-res"), close = $("#command-close");
+
+    function syncResults(){
+      if (!globalResults) return;
+      results.innerHTML = globalResults.innerHTML;
+      if (!input.value.trim()) results.innerHTML = '<p class="q-vacio">Escribe una palabra para buscar. También puedes ir directo a una sección.</p>';
+    }
+    function open(){
+      if (dialog.open) return;
+      if (globalSearch) input.value = globalSearch.value;
+      if (typeof dialog.showModal === "function") dialog.showModal();
+      else dialog.setAttribute("open", "");
+      syncResults();
+      window.setTimeout(function(){ input.focus(); input.select(); }, 0);
+    }
+    function shut(){
+      if (typeof dialog.close === "function") dialog.close();
+      else dialog.removeAttribute("open");
+    }
+    document.addEventListener("open-command", open);
+    close.addEventListener("click", shut);
+    dialog.addEventListener("click", function(e){ if (e.target === dialog) shut(); });
+    input.addEventListener("input", function(){
+      if (globalSearch){
+        globalSearch.value = input.value;
+        globalSearch.dispatchEvent(new Event("input", {bubbles:true}));
+      }
+      window.setTimeout(syncResults, 145);
+    });
+    input.addEventListener("keydown", function(e){
+      if (e.key === "Escape"){ e.preventDefault(); shut(); return; }
+      var items = $$('a', results);
+      if (!items.length) return;
+      var active = items.indexOf(document.activeElement);
+      if (e.key === "ArrowDown" || e.key === "ArrowUp"){
+        e.preventDefault();
+        active += e.key === "ArrowDown" ? 1 : -1;
+        if (active < 0) active = items.length - 1;
+        if (active >= items.length) active = 0;
+        items[active].focus();
+      } else if (e.key === "Enter"){
+        e.preventDefault();
+        items[active >= 0 ? active : 0].click();
+      }
+    });
+    results.addEventListener("click", function(e){ if (e.target.closest("a")) shut(); });
+    var shortcuts = $$(".command-shortcuts a");
+    shortcuts.forEach(function(a){ a.addEventListener("click", shut); });
+    document.addEventListener("keydown", function(e){
+      if (!dialog.open || !(e.metaKey || e.ctrlKey) || !/^[1-4]$/.test(e.key)) return;
+      e.preventDefault();
+      if (shortcuts[Number(e.key) - 1]) shortcuts[Number(e.key) - 1].click();
+    });
+    dialog.addEventListener("close", function(){ if (globalSearch) globalSearch.value = input.value; });
   })();
 })();

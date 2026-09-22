@@ -30,7 +30,7 @@ FD.VARIABLES = {
 
 FD.ETAPAS = [
   {n:"7.1", t:"Entrada", d:"Toda campaña, solicitud, proyecto o situación entra por aquí.", label:"Puede originarse en",
-   items:["Brief","Solicitud de cliente","Nueva campaña","Nuevo periodo","Cambio de estrategia","Problema","Oportunidad","Alerta","Cambio de presupuesto","Cambio de oferta"]},
+   items:["Ruta","Solicitud de cliente","Nueva campaña","Nuevo periodo","Cambio de estrategia","Problema","Oportunidad","Alerta","Cambio de presupuesto","Cambio de oferta"]},
   {n:"7.2", t:"Clasificación", d:"Ubicar el trabajo antes de moverlo.", label:"Definir",
    items:["Tipo de trabajo","Prioridad","Impacto","Urgencia","Responsable","Áreas involucradas","Dependencias"]},
   {n:"7.3", t:"Análisis de contexto", d:"Antes de entrar en ejecución.", label:"Preguntarse",
@@ -185,7 +185,7 @@ FD.INDICE = [
     {a:"equipo",     t:"10 · Conectar y traducir — planner"},
     {a:"equipo",     t:"11 · Operar con criterio — performance / trafficker"},
     {a:"reparto",    t:"12 · Cómo se reparte el trabajo entre Planner y Performance"},
-    {a:"interfaces", t:"14—17 · Interfaces con estrategia, creatividad, CRM y cliente"}
+    {a:"interfaces", t:"14—17 · Conexiones con Cuentas, Martech y áreas aliadas"}
   ]},
   {f:"operacion", a:"cuentas", n:"93", t:"Distribución de cuentas", items:[
     {a:"cuentas", t:"Tablero de reparto por persona — se mueve arrastrando las fichas"},
@@ -194,7 +194,7 @@ FD.INDICE = [
   ]},
   {f:"operacion", a:"inteligencia", n:"18—21", t:"Inteligencia estratégica", items:[
     {a:"inteligencia", t:"18 · Radar de contexto — qué se vigila y con qué frecuencia"},
-    {a:"inteligencia", t:"19 · Brief estratégico de activación"},
+    {a:"inteligencia", t:"19 · Ruta estratégica de activación"},
     {a:"analisis",     t:"20 · Las cuatro preguntas que cierran un análisis"},
     {a:"escenarios",   t:"21 · Tres escenarios: base, favorable y restrictivo"}
   ]},
@@ -227,7 +227,7 @@ FD.INDICE = [
   {f:"operacion", a:"solicitudes", n:"94", t:"Cómo se nos solicitan las cosas", items:[
     {a:"solicitudes", t:"94.0 · Los cinco datos que trae cualquier solicitud"},
     {a:"solicitudes", t:"94.8 · Qué pasa si falta algo: se devuelve, no se ejecuta a medias"},
-    {a:"requisitos",  t:"94.1 · Propuesta o tema estratégico — brief, meta y línea base"},
+    {a:"requisitos",  t:"94.1 · Propuesta o tema estratégico — ruta, meta y línea base"},
     {a:"requisitos",  t:"94.2 · Implementación de campaña — fechas, presupuesto, piezas y medición"},
     {a:"requisitos",  t:"94.3 · Materiales o piezas — mensaje, cantidades y aprobación"},
     {a:"requisitos",  t:"94.4 · Informe — objetivo, KPIs y periodo de comparación"},
@@ -280,7 +280,7 @@ FD.INDICE = [
   ]},
   {f:"sistema", a:"futuro", n:"83—85", t:"Próximas iteraciones", items:[
     {a:"futuro",         t:"83 · Qué se construye en la versión 0.4"},
-    {a:"madurez-medicion", t:"83.1 · Roadmap de medición — atribución hoy; incrementalidad y MMM a futuro"},
+    {a:"madurez-medicion", t:"83.1 · Roadmap de señal — Pixel + API y First-Party Data"},
     {a:"criterio-exito", t:"84 · Criterio de éxito del framework"},
     {a:"cierre-title",   t:"85 · Principio final"}
   ]}
@@ -290,7 +290,7 @@ FD.INDICE = [
    Requisitos mínimos de entrada por tipo de solicitud.
    `min` = sin esto la solicitud se devuelve. `des` = mejora el resultado pero no bloquea. */
 FD.SOLICITUDES = [
-  {c:"94.1", t:"Propuesta o tema estratégico", sale:"Presentación o ruta estratégica", horas:"3 horas",
+  {c:"94.1", t:"Propuesta o tema estratégico", sale:"Presentación o ruta estratégica", sla:"1 a 4 días hábiles",
    pregunta:"¿Qué problema de negocio hay que resolver?",
    min:[
      "Objetivo de negocio: qué tiene que cambiar, no qué entregable se quiere",
@@ -301,11 +301,11 @@ FD.SOLICITUDES = [
      "Audiencia, mercado o producto al que aplica",
      "Quién toma la decisión y para cuándo necesita decidir"
    ],
-   des:["Qué se intentó antes y qué resultó","Restricciones legales, de marca o de oferta","Dependencias con Data, CRM, SEO o creatividad","Materiales y activos ya disponibles"],
-   conecta:"19 · Brief estratégico · 21 · Tres escenarios · 05—06 · Variables",
+   des:["Qué se intentó antes y qué resultó","Restricciones legales, de marca o de oferta","Dependencias con Martech, Cuentas o creatividad","Materiales y activos ya disponibles"],
+   conecta:"19 · Ruta estratégica · 21 · Tres escenarios · 05—06 · Variables",
    nota:"Sin meta y sin línea base no hay propuesta: hay una lista de tácticas."},
 
-  {c:"94.2", t:"Implementación de campaña", sale:"Reporte de implementación", horas:"3 horas · mismo día",
+  {c:"94.2", t:"Implementación de campaña", sale:"Reporte de implementación", sla:"2 a 7 días hábiles",
    pregunta:"¿Se puede construir y medir lo que se pide?",
    min:[
      "Fecha de salida y fecha de cierre",
@@ -320,7 +320,7 @@ FD.SOLICITUDES = [
    conecta:"25 · Seis compuertas de QA · 75.1 · Nomenclatura · 92 · Estructura por medio",
    nota:"Sin pieza aprobada o sin landing medible no arranca: la compuerta de QA no abre y la inversión saldría a ciegas."},
 
-  {c:"94.3", t:"Materiales o piezas", sale:"Cuadro de materiales", horas:"2 horas",
+  {c:"94.3", t:"Materiales o piezas", sale:"Cuadro de materiales", sla:"2 a 7 días hábiles",
    pregunta:"¿Qué hay que comunicar y para cuándo?",
    min:[
      "Qué se quiere comunicar: el mensaje, no la cantidad de piezas",
@@ -335,7 +335,7 @@ FD.SOLICITUDES = [
    conecta:"24 · Cuadro de materiales · 90 · Matriz de variables",
    nota:"Pedir “cinco piezas” no es un requerimiento. Pedir “comunicar el beneficio X a la audiencia Y” sí, y de ahí salen las piezas."},
 
-  {c:"94.4", t:"Informe", sale:"Informe con acciones derivadas", horas:"2 horas",
+  {c:"94.4", t:"Informe", sale:"Informe con acciones derivadas", sla:"1 a 3 días hábiles",
    pregunta:"¿Qué decisión va a soportar este informe?",
    min:[
      "Objetivo del informe: qué decisión debe habilitar",
@@ -348,7 +348,7 @@ FD.SOLICITUDES = [
    conecta:"81·06 · Todo informe genera acciones · 37 · Cadena de localización",
    nota:"Un informe sin decisión asociada se convierte en un reporte de cifras que nadie usa."},
 
-  {c:"94.5", t:"Presupuesto o proyección", sale:"Flow, forecast y ejecutados", horas:"2 horas",
+  {c:"94.5", t:"Presupuesto o proyección", sale:"Flow, forecast y ejecutados", sla:"1 a 4 días hábiles",
    pregunta:"¿Con qué supuestos vamos a proyectar?",
    min:[
      "Periodo que cubre la proyección",
@@ -361,7 +361,7 @@ FD.SOLICITUDES = [
    conecta:"26—29 · Control presupuestal · 21 · Escenarios · 81·02 · Toda proyección declara supuestos",
    nota:"Una proyección sin supuestos declarados no se puede evaluar después: no se sabe si falló el plan o el supuesto."},
 
-  {c:"94.6", t:"Optimización", sale:"Bitácora de optimización", horas:"2 horas · mismo día",
+  {c:"94.6", t:"Optimización", sale:"Bitácora de optimización", sla:"1 a 3 días hábiles",
    pregunta:"¿Qué se detectó y desde cuándo?",
    min:[
      "Qué se detectó y desde qué fecha",
@@ -373,7 +373,7 @@ FD.SOLICITUDES = [
    conecta:"34—41 · Ruta de reacción · 89 · Testeo de variables",
    nota:"Antes de mover se valida que la desviación sea real: la mitad de las urgencias son ruido."},
 
-  {c:"94.7", t:"Incendio", sale:"Respuesta y acciones inmediatas", horas:"1 hora",
+  {c:"94.7", t:"Incendio", sale:"Respuesta y acciones inmediatas", sla:"Prioridad inmediata; según impacto",
    pregunta:"¿Qué está roto y qué está en riesgo?",
    min:[
      "Qué está fallando y desde cuándo",

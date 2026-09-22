@@ -20,6 +20,30 @@ window.FD = window.FD || {};
     return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   };
 
+  /* Motion-style view transition with a native, dependency-free fallback.
+     Keeps the framework static while allowing browsers with View Transition API
+     to interpolate layout changes instead of snapping between states. */
+  FD.viewTransition = function(update){
+    if (FD.menosMovimiento() || typeof document.startViewTransition !== "function"){
+      update(); return null;
+    }
+    try {
+      return document.startViewTransition(update);
+    } catch(e){
+      update(); return null;
+    }
+  };
+
+  /* Small spring-like press response. Only transform is animated so the
+     interaction stays on the compositor and remains cheap on long pages. */
+  FD.pressSpring = function(el){
+    if (!el || FD.menosMovimiento() || typeof el.animate !== "function") return;
+    el.animate(
+      [{transform:"scale(.985)"},{transform:"scale(1)"}],
+      {duration:360,easing:"cubic-bezier(.34,1.56,.64,1)"}
+    );
+  };
+
   /* copia al portapapeles y dice la VERDAD sobre el resultado.
      Antes ambos botones hacían .then(aviso).catch(aviso): el fallo mostraba
      el mismo mensaje verde de éxito, y el usuario pegaba en una campaña real

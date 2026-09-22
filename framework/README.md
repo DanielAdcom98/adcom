@@ -186,7 +186,7 @@ campañas `c` y su responsable `r`, que debe coincidir con un `id` de `equipo`).
 `FD.SOLICITUDES` es la puerta de entrada del área: un objeto por tipo de solicitud.
 
 ```js
-{c:"94.4", t:"Informe", sale:"Informe con acciones derivadas", horas:"2 horas",
+{c:"94.4", t:"Informe", sale:"Informe con acciones derivadas", sla:"1 a 3 días hábiles",
  pregunta:"¿Qué decisión va a soportar este informe?",
  min:["Objetivo del informe: qué decisión debe habilitar", "…"],   // sin esto se devuelve
  des:["Preguntas concretas que se esperan responder", "…"],        // suma, no bloquea
@@ -197,7 +197,7 @@ campañas `c` y su responsable `r`, que debe coincidir con un `id` de `equipo`).
 - **`min` es la lista que bloquea.** Antes de agregar algo ahí, pregúntate si de verdad impide
   empezar. Todo lo que ayuda pero no impide va en `des`; si `min` crece sin control, la puerta deja
   de usarse y la gente vuelve a pedir por chat.
-- **`horas` y `sale` deben coincidir con la tabla del punto 86.** Si cambias uno, cambia el otro.
+- **`sla` y `sale` deben coincidir con la tabla del punto 86.** Si cambias uno, cambia el otro.
 - El botón *Copiar plantilla* arma el texto desde estos mismos campos, así que no hay una plantilla
   aparte que se pueda desactualizar.
 
