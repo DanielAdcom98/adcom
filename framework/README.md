@@ -115,6 +115,50 @@ y ajustes de un diagrama.
    observa cualquier sección que esté enlazada desde ahí.
 4. Marca con `data-reveal` los bloques que deban aparecer al hacer scroll.
 
+## Títulos: tres niveles y el número del punto
+
+- **Apertura de sección** (`.wrap > .section-heading`): en escritorio, título y frase a la izquierda;
+  entradilla y mapa de la sección a la derecha. La línea de arriba (`.eyebrow`) es la ubicación: el JS
+  le antepone la familia del índice (Fundamentos, Operación, Control, Reacción, Sistema).
+- **Subsección** (`.divider > .section-heading`): el número del punto va en pastilla, en la misma línea
+  del título. Si la subsección usa `h3.sub-heading`, el número se escribe así:
+
+  ```html
+  <h3 class="sub-heading" data-reveal><span class="num">86</span> Sistema de priorización de solicitudes</h3>
+  ```
+
+  No escribas `86 · Título` a mano: pierde la pastilla y el mapa de la sección no separa el número.
+- **Mapa de la sección** (`.en-seccion`): se arma solo con cada `.divider[id]` y `h3.sub-heading[id]`
+  de la sección, cuando hay dos o más. Para que una subsección aparezca, basta con darle `id`.
+- **Las fichas del resumen son enlaces** (`a.card-link`): cada una lleva a su sección. Si cambia el
+  `id` de una sección, actualiza el `href` de su ficha.
+
+## Qué componente usar: según lo que es el contenido
+
+Antes de poner dos o tres tarjetas en una rejilla, pregúntate qué relación tienen entre sí. Todos
+estos componentes trabajan sobre las mismas `.card`: cambiar de forma es cambiar la clase del
+contenedor, no reescribir las tarjetas.
+
+| El contenido es… | Componente | Ejemplo en la página |
+|---|---|---|
+| Explicaciones que se leen una tras otra | `div.notas` | 29.4—29.7, 98.1—98.2 |
+| Categorías paralelas y cortas | `div.columnas` (color con `style="--tono:var(--green)"`) | escenarios (21), familias A/B/C |
+| Niveles ordenados de menor a mayor | `div.columnas.escala` + `style="--nivel:2"` en cada tarjeta | alertas S3—S1, autonomía 97 |
+| Opuestos | `div.versus` con `card versus-si` y `card versus-no` | 52/53, 95.1/95.2, 89.2/89.3 |
+| Serie paralela larga (4 o más, con detalle) | `div.carrusel` con `data-tab="Nombre"` en cada tarjeta | Media Bridge (96), interfaces (14—17) |
+| Secuencia en el tiempo | `ol.linea` con `li.card` | madurez de medición (83.1), las cuatro preguntas (20) |
+| Muchos elementos con los mismos atributos | una tabla | frentes de la v0.4, lentes del 36 |
+
+- **Escala:** el riel se llena `--nivel / --niveles` (3 por defecto). Ordénala siempre de menor a mayor.
+- **Carrusel:** el JS arma las pestañas, las flechas y el contador. Sin JS queda una fila que se
+  desplaza de lado. En papel se imprimen todas las fichas. Un enlace o resultado de búsqueda que
+  apunta adentro de una ficha la trae a la vista.
+- **Barra en tabla** (`span.barra` con `style="--v:.66"`): solo para una cifra real, con el valor escrito
+  al lado. Si un valor no cabe en la escala (por ejemplo días frente a horas), usa `barra-fuera` y dilo.
+  No inventes cifras para tener un gráfico.
+- **La tarjeta sola sigue sirviendo** cuando cada una es una entidad completa y distinta (los tres
+  roles del equipo) o cuando es un enlace (las fichas del resumen).
+
 ## Cómo agregar un diagrama
 
 Los diagramas son SVG escritos a mano, sin librerías. La plantilla mínima:
@@ -159,6 +203,11 @@ entrada consultable; `a` es el ancla de destino y tiene que existir como `id` en
   {a:"nomenclatura", t:"71—77 · Nomenclatura y constructor de nombres"}
 ]}
 ```
+
+Si el texto de una entrada empieza con el número del punto seguido de ` · ` (por ejemplo
+`"58.1 · Dónde vive cada cosa hoy"`), el índice lo separa solo en su propia columna. Una entrada sin
+ese formato se muestra sin número. Las familias del riel izquierdo son filtros que se prenden y se
+apagan, y su conteo sigue a la búsqueda.
 
 El buscador filtra por texto de la entrada, ignora tildes y resalta la coincidencia. Si agregas una
 subsección al documento, ponle un `id` al `<div class="divider">` o al `<h3>` y súmala aquí: es el

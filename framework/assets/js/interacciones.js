@@ -126,10 +126,13 @@
   /* ---------- variables (06): tres tarjetas desde contenido.js ---------- */
   var varsGrid = $("#vars-grid");
   if (varsGrid && FD.VARIABLES){
-    Object.keys(FD.VARIABLES).forEach(function(k){
+    var grupos = Object.keys(FD.VARIABLES);
+    grupos.forEach(function(k, idx){
       var d = FD.VARIABLES[k];
       var art = document.createElement("div");
       art.className = "card card-light";
+      /* controlables, influenciables, externas: el margen de acción baja de 3 a 1 */
+      art.style.setProperty("--nivel", grupos.length - idx);
       art.innerHTML = '<span class="card-index">' + d.tag + '</span><h3>' + d.title +
                       '</h3><p style="margin:12px 0 16px">' + d.desc + '</p><ul class="chips"></ul>';
       varsGrid.appendChild(art);
@@ -280,10 +283,165 @@
     });
   });
 
-  /* ---------- índice consultable, agrupado por familias ---------- */
+  /* ---------- carrusel ----------
+     El marcado es una lista de .card dentro de .carrusel; el JS le agrega las
+     pestañas (con el data-tab de cada ficha), las flechas y el contador. Sin JS
+     queda una fila que se desplaza de lado, con todo el contenido presente. */
+  $$(".carrusel").forEach(function(c, ci){
+    var fichas = $$(":scope > .card", c);
+    if (fichas.length < 2) return;
+    var pista = document.createElement("div");
+    pista.className = "carrusel-pista";
+    pista.tabIndex = 0;
+    pista.setAttribute("aria-label", (c.getAttribute("aria-label") || "Carrusel") + ". Usa las flechas o las pestañas para recorrerlo.");
+    var tabs = document.createElement("div");
+    tabs.className = "carrusel-tabs";
+    tabs.setAttribute("aria-label", c.getAttribute("aria-label") || "Fichas");
+    var botones = fichas.map(function(f, i){
+      f.id = f.id || "car" + ci + "-" + (i + 1);
+      f.setAttribute("aria-roledescription", "ficha");
+      f.setAttribute("aria-label", (i + 1) + " de " + fichas.length);
+      pista.appendChild(f);
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "tab";
+      b.setAttribute("aria-controls", f.id);
+      b.textContent = f.getAttribute("data-tab") || (f.querySelector("h3,h4") || f).textContent.trim();
+      b.addEventListener("click", function(){ ir(i); });
+      tabs.appendChild(b);
+      return b;
+    });
+    var nav = document.createElement("div");
+    nav.className = "carrusel-nav";
+    nav.innerHTML = '<button type="button" aria-label="Ficha anterior"><svg class="ico" aria-hidden="true"><use href="#i-chev-l"/></svg></button>' +
+                    '<span class="carrusel-cuenta" aria-live="polite"></span>' +
+                    '<button type="button" aria-label="Ficha siguiente"><svg class="ico" aria-hidden="true"><use href="#i-chev-r"/></svg></button>';
+    var prev = nav.children[0], cuenta = nav.children[1], next = nav.children[2];
+    c.appendChild(tabs); c.appendChild(pista); c.appendChild(nav);
+
+    var actual = -1;
+    function dos(n){ return (n < 10 ? "0" : "") + n; }
+    function marcar(i){
+      if (i === actual) return;
+      actual = i;
+      botones.forEach(function(b, k){
+        b.classList.toggle("is-active", k === i);
+        if (k === i) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+      });
+      cuenta.textContent = dos(i + 1) + " / " + dos(fichas.length);
+      prev.disabled = i === 0;
+      next.disabled = i === fichas.length - 1;
+    }
+    function ir(i){
+      i = Math.max(0, Math.min(fichas.length - 1, i));
+      destino = i;
+      pista.scrollTo({left: fichas[i].offsetLeft - pista.offsetLeft, behavior: FD.menosMovimiento() ? "auto" : "smooth"});
+      marcar(i);
+    }
+    /* la ficha pedida con pestaña o flecha manda hasta que alguien desplace la pista a mano:
+       las últimas no llegan al borde izquierdo y la más cercana no sería la pedida */
+    var destino = -1;
+    function leer(){
+      var x = pista.scrollLeft, mejor = 0, dist = Infinity;
+      var alFinal = x + pista.clientWidth >= pista.scrollWidth - 4;
+      pista.classList.toggle("al-final", alFinal);
+      if (destino >= 0){ marcar(destino); return; }
+      fichas.forEach(function(f, k){
+        var d = Math.abs(f.offsetLeft - pista.offsetLeft - x);
+        if (d < dist){ dist = d; mejor = k; }
+      });
+      marcar(alFinal ? fichas.length - 1 : mejor);
+    }
+    ["wheel", "touchstart", "pointerdown"].forEach(function(ev){
+      pista.addEventListener(ev, function(){ destino = -1; }, {passive:true});
+    });
+    var t = null;
+    pista.addEventListener("scroll", function(){ clearTimeout(t); t = setTimeout(leer, 60); }, {passive:true});
+    prev.addEventListener("click", function(){ ir(actual - 1); });
+    next.addEventListener("click", function(){ ir(actual + 1); });
+    pista.addEventListener("keydown", function(e){
+      if (e.key === "ArrowRight"){ e.preventDefault(); ir(actual + 1); }
+      else if (e.key === "ArrowLeft"){ e.preventDefault(); ir(actual - 1); }
+    });
+    c._irA = function(el){
+      var k = fichas.indexOf(el.closest(".carrusel-pista > .card"));
+      if (k >= 0) ir(k);
+    };
+    marcar(0); leer();
+  });
+  /* un enlace o un resultado de búsqueda que apunta dentro de una ficha la trae a la vista */
+  function mostrarDestino(){
+    var id = location.hash.slice(1);
+    var el = id && document.getElementById(id);
+    var c = el && el.closest && el.closest(".carrusel");
+    if (c && c._irA) c._irA(el);
+  }
+  window.addEventListener("hashchange", mostrarDestino);
+  mostrarDestino();
+
+  /* ---------- ubicación y mapa de cada sección ----------
+     La familia sale de FD.INDICE y las subsecciones del propio DOM: así el
+     mapa no se puede desactualizar respecto a lo que la sección contiene. */
+  if (FD.INDICE && FD.FAMILIAS){
+    var famDe = {};
+    FD.INDICE.forEach(function(b){
+      var fam = FD.FAMILIAS.filter(function(f){ return f.id === b.f; })[0];
+      if (fam && !famDe[b.a]) famDe[b.a] = fam.t;
+    });
+    $$("main > section[id]").forEach(function(sec){
+      var cabeza = sec.querySelector(".wrap > .section-heading");
+      if (!cabeza) return;
+      var ceja = cabeza.querySelector(".eyebrow");
+      if (ceja && famDe[sec.id]){
+        var s = document.createElement("span");
+        s.className = "loc-fam";
+        s.textContent = famDe[sec.id];
+        ceja.insertBefore(s, ceja.firstChild);
+      }
+      var destinos = $$(".divider[id], h3.sub-heading[id]", sec);
+      if (destinos.length < 2) return;
+      var nav = document.createElement("nav");
+      nav.className = "en-seccion";
+      nav.setAttribute("aria-label", "En esta sección");
+      var html = '<p>En esta sección</p><ol>';
+      destinos.forEach(function(d){
+        if (d.matches("h3") && d.closest(".divider[id]")) return;
+        var h = d.matches("h3") ? d : d.querySelector("h2, h3");
+        if (!h) return;
+        var titulo = h.textContent.replace(/\s+/g, " ").trim();
+        var num = "";
+        var pastilla = h.querySelector(".num");
+        if (pastilla){
+          num = pastilla.textContent.trim();
+          titulo = titulo.slice(num.length).trim();
+        } else {
+          var e = d.querySelector(".eyebrow span");
+          var ix = !e && d.querySelector(".card-index");
+          if (e) num = e.textContent.trim();
+          else if (ix) num = ix.textContent.split("·")[0].trim();
+        }
+        html += '<li><a href="#' + d.id + '"><b>' + num + '</b><span>' + titulo + '</span></a></li>';
+      });
+      nav.innerHTML = html + '</ol>';
+      cabeza.appendChild(nav);
+    });
+  }
+
+  /* ---------- índice consultable, agrupado por familias ----------
+     Cada entrada separa el número del punto de su texto: se escanea por la
+     columna de números y se lee por la de texto. Las familias son filtros que
+     se prenden y se apagan (aria-pressed), no pestañas: no hay panel que abrir. */
   var toc = $("#toc");
   if (toc && FD.INDICE && FD.FAMILIAS){
     var grupos = [];
+
+    /* quita tildes conservando la longitud, para que los índices sigan calzando */
+    function plano(t){ return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+    function escapar(t){ return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+    function partir(t){
+      var m = t.match(/^(\d[\d.]*(?:\s*—\s*\d[\d.]*)?)\s*·\s*(.+)$/);
+      return m ? {n: m[1].replace(/\s+/g, ""), t: m[2]} : {n: "", t: t};
+    }
 
     FD.FAMILIAS.forEach(function(fam){
       var suyos = FD.INDICE.filter(function(b){ return b.f === fam.id; });
@@ -291,12 +449,16 @@
       var sec = document.createElement("section");
       sec.className = "toc-fam";
       sec.setAttribute("data-fam", fam.id);
+      sec.setAttribute("aria-label", fam.t);
       var total = suyos.reduce(function(n, b){ return n + b.items.length; }, 0);
       var h = '<header class="toc-fam-h"><span>' + fam.r + '</span><b>' + fam.t +
-              '</b><small>' + fam.d + ' · ' + total + ' entradas</small></header><div class="toc-grid">';
+              '</b><small>' + fam.d + '</small></header><div class="toc-grid">';
       suyos.forEach(function(b){
-        h += '<article class="toc-block"><a class="toc-h" href="#' + b.a + '"><b>' + b.n + '</b>' + b.t + '</a><ul class="toc-list">';
-        b.items.forEach(function(it){ h += '<li><a href="#' + it.a + '">' + it.t + '</a></li>'; });
+        h += '<article class="toc-block"><a class="toc-h" href="#' + b.a + '"><b>' + b.n + '</b> <span>' + b.t + '</span></a><ul class="toc-list">';
+        b.items.forEach(function(it){
+          var x = partir(it.t);
+          h += '<li><a href="#' + it.a + '"><b class="toc-n">' + escapar(x.n) + '</b> <span class="toc-t">' + escapar(x.t) + '</span></a></li>';
+        });
         h += '</ul></article>';
       });
       sec.innerHTML = h + '</div>';
@@ -308,8 +470,8 @@
             el: bl,
             titulo: bl.querySelector(".toc-h").textContent,
             items: $$(".toc-list li", bl).map(function(li){
-              var a = li.querySelector("a");
-              return {li: li, a: a, texto: a.textContent};
+              var n = li.querySelector(".toc-n").textContent, t = li.querySelector(".toc-t");
+              return {li: li, span: t, texto: t.textContent, busca: plano(n + " " + t.textContent)};
             })
           };
         })
@@ -320,67 +482,65 @@
     var barra = $("#toc-filtros"), famActiva = "todo", fichas = [];
     var TOTAL = grupos.reduce(function(n, g){ return n + g.total; }, 0);
 
-    /* quita tildes conservando la longitud, para que los índices sigan calzando */
-    function plano(t){ return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
-    function escapar(t){ return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
-    function resaltar(a, texto, termino){
-      if (!termino){ a.textContent = texto; return; }
-      var i = plano(texto).indexOf(termino);
-      if (i < 0){ a.textContent = texto; return; }
-      a.innerHTML = escapar(texto.slice(0, i)) + "<mark>" + escapar(texto.slice(i, i + termino.length)) +
-                    "</mark>" + escapar(texto.slice(i + termino.length));
+    function resaltar(span, texto, termino){
+      var i = termino ? plano(texto).indexOf(termino) : -1;
+      if (i < 0){ span.textContent = texto; return; }
+      span.innerHTML = escapar(texto.slice(0, i)) + "<mark>" + escapar(texto.slice(i, i + termino.length)) +
+                       "</mark>" + escapar(texto.slice(i + termino.length));
     }
 
     function ficha(id, texto){
       var b = document.createElement("button");
       b.type = "button";
-      b.className = "tab";
-      b.setAttribute("role", "tab");
-      b.setAttribute("aria-selected", id === famActiva ? "true" : "false");
-      b.textContent = texto;
+      b.className = "toc-fil";
+      b.setAttribute("aria-pressed", id === famActiva ? "true" : "false");
+      b.innerHTML = '<span>' + texto + '</span><b></b>';
       b.addEventListener("click", function(){
-        famActiva = id;
+        /* volver a pulsar la familia activa la apaga */
+        famActiva = (famActiva === id && id !== "todo") ? "todo" : id;
         filtrar();
       });
       barra.appendChild(b);
-      fichas.push({id: id, el: b});
+      fichas.push({id: id, el: b, cuenta: b.querySelector("b")});
     }
     ficha("todo", "Todo el framework");
     FD.FAMILIAS.forEach(function(f){ ficha(f.id, f.t); });
 
     function filtrar(){
       var termino = plano((campo.value || "").trim());
-      /* familia y término se combinan: antes se anulaban en silencio, y
-         "Control" + "umbral" era justo lo que un analista pediría. */
+      /* familia y término se combinan: "Control" + "umbral" es justo lo que un analista pediría */
       var porFamilia = famActiva !== "todo";
-      var visibles = 0;
+      var visibles = 0, porFam = {};
       grupos.forEach(function(g){
-        var deLaFamilia = !porFamilia || g.fam.id === famActiva;
         var enGrupo = 0;
         g.bloques.forEach(function(b){
           var enTitulo = !!termino && plano(b.titulo).indexOf(termino) >= 0;
           var propios = 0;
           b.items.forEach(function(it){
-            var on = !termino || enTitulo || plano(it.texto).indexOf(termino) >= 0;
+            var on = !termino || enTitulo || it.busca.indexOf(termino) >= 0;
             it.li.classList.toggle("is-hidden", !on);
-            resaltar(it.a, it.texto, on && !enTitulo ? termino : "");
+            resaltar(it.span, it.texto, on && !enTitulo ? termino : "");
             if (on) propios++;
           });
           b.el.classList.toggle("is-hidden", propios === 0);
           enGrupo += propios;
         });
+        porFam[g.fam.id] = enGrupo;
+        var deLaFamilia = !porFamilia || g.fam.id === famActiva;
         g.el.classList.toggle("is-hidden", !deLaFamilia || enGrupo === 0);
         if (deLaFamilia) visibles += enGrupo;
       });
+      var todas = grupos.reduce(function(n, g){ return n + porFam[g.fam.id]; }, 0);
       fichas.forEach(function(f){
         var sel = f.id === famActiva;
-        f.el.classList.toggle("is-active", sel);
-        f.el.setAttribute("aria-selected", sel ? "true" : "false");
+        var n = f.id === "todo" ? todas : porFam[f.id];
+        f.el.setAttribute("aria-pressed", sel ? "true" : "false");
+        f.cuenta.textContent = n;
+        f.el.classList.toggle("is-cero", n === 0 && !sel);
       });
-      if (termino) marcador.textContent = visibles + " de " + TOTAL +
-        (porFamilia ? " · filtrado por familia" : "");
+      if (termino) marcador.textContent = visibles + " de " + TOTAL + " entradas" + (porFamilia ? " en esta familia" : "");
       else if (porFamilia) marcador.textContent = visibles + " entradas en esta familia";
-      else marcador.textContent = TOTAL + " entradas";
+      else marcador.textContent = TOTAL + " entradas en cinco familias";
       vacio.hidden = visibles > 0;
     }
     campo.addEventListener("input", filtrar);
@@ -485,6 +645,7 @@
         $$("h2,h3,h4,p,li,figcaption,td,th", sec).forEach(function(el){
           /* solo hojas: si contiene otro indexable, el hijo ya lo cubre */
           if (el.querySelector("p,li,td,th,figcaption")) return;
+          if (el.closest(".en-seccion")) return;
           var t = el.textContent.replace(/\s+/g," ").trim();
           if (t.length < 14) return;
           var conId = el.closest("[id]");

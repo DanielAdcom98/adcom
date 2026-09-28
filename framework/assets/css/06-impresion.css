@@ -25,12 +25,14 @@ body{
 .scroll-cue,
 .hero-visual,
 .consola,
+.toc-rail,
 .toc-search,
 .toc-filtros,
 .toc-vacio,
 .copy-ok,
 .button,
 .link-reset,
+.en-seccion,
 .cycle-nav{display:none !important}
 
 /* ---------- todo visible: en papel no hay scroll que dispare la animación ---------- */
@@ -109,6 +111,13 @@ table{font-size:8.5pt}
 }
 .grid-3>*{grid-column:auto !important}
 .grid-2{gap:8pt !important}
+
+/* ---------- carrusel: en papel se ven todas las fichas, una debajo de otra ---------- */
+.carrusel-tabs,.carrusel-nav{display:none !important}
+.carrusel-pista{display:grid !important;gap:8pt !important;overflow:visible !important;-webkit-mask-image:none !important;mask-image:none !important}
+.carrusel-pista>*{flex:none !important}
+.notas>.card,.columnas>.card,.linea>*{border:0 !important;border-top:1px solid #bbb !important}
+.barra i{background:#000 !important}
 
 /* ---------- la URL de un enlace externo, junto al texto ---------- */
 a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555}
