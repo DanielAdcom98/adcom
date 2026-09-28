@@ -81,6 +81,32 @@
   </div>
 </header>
 
+<dialog class="command-dialog" id="command-dialog" aria-labelledby="command-title">
+  <div class="command-panel">
+    <div class="command-head">
+      <div>
+        <p class="command-kicker">Consulta rápida</p>
+        <h2 id="command-title">Buscar en el framework</h2>
+      </div>
+      <button class="command-close" id="command-close" type="button" aria-label="Cerrar búsqueda">Esc</button>
+    </div>
+    <label class="command-input-wrap" for="command-q">
+      <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>
+      <input type="search" id="command-q" autocomplete="off" placeholder="Busca una sección, concepto o regla…" aria-controls="command-results">
+      <kbd>⌘K</kbd>
+    </label>
+    <div class="command-shortcuts" aria-label="Acciones rápidas">
+      <span class="command-group-label">Ir directo a</span>
+      <a href="#indice"><span class="command-icon">⌘</span> Índice <kbd>⌘1</kbd></a>
+      <a href="#interfaces"><span class="command-icon">↔</span> Conexiones <kbd>⌘2</kbd></a>
+      <a href="#solicitudes"><span class="command-icon">→</span> Solicitudes <kbd>⌘3</kbd></a>
+      <a href="#optimizacion"><span class="command-icon">↗</span> Optimización <kbd>⌘4</kbd></a>
+    </div>
+    <div class="command-results" id="command-results" role="region" aria-live="polite" aria-label="Resultados de búsqueda"></div>
+    <div class="command-foot"><span>↑ ↓ navegar</span><span>Enter abrir</span><span>Esc cerrar</span></div>
+  </div>
+</dialog>
+
 <main id="inicio">
 
 <!-- ============ HERO ============ -->
@@ -117,7 +143,7 @@
       </ul>
     </div>
 
-    <p class="hero-meta" data-reveal style="--d:200ms">5 pilares · 10 etapas de trabajo · 4 interfaces · 15 reglas documentales · 99 puntos</p>
+    <p class="hero-meta" data-reveal style="--d:200ms">5 pilares · 10 etapas de trabajo · 6 conexiones · 15 reglas documentales · 99 puntos</p>
     <p class="hero-nota" data-reveal style="--d:240ms">Aplica a todas las cuentas del área. Lo que no está aquí queda a criterio profesional. Versión 0.3 en borrador: los puntos sin cerrar están marcados como tales.</p>
 
   </div>
@@ -163,8 +189,8 @@
       <li><a href="#equipo">
         <span class="tesis-n" aria-hidden="true">05</span>
         <span class="tesis-loc">Quién hace qué · puntos 08—17</span>
-        <h3>Tres roles y cuatro interfaces</h3>
-        <p>Dirección, Planner y Performance. Y una forma declarada de conectarse con Data, CRM, SEO y Creatividad: qué entrega Digital, qué necesita recibir y qué decisión habilita el intercambio.</p>
+        <h3>Tres roles y seis conexiones</h3>
+        <p>Dirección, Planner y Performance. Y una forma declarada de conectarse con Cuentas, Martech, Creatividad, Redes sociales orgánicas, Estrategia e investigación y Financiera: qué entrega Digital, qué necesita recibir y qué decisión habilita el intercambio.</p>
       </a></li>
       <li><a href="#control">
         <span class="tesis-n" aria-hidden="true">06</span>
@@ -254,6 +280,16 @@
 
     <div class="context-grid">
       <div data-reveal>
+        <div class="context-snapshot">
+          <div class="context-snapshot-head"><span class="card-index">DIAGNÓSTICO DE PARTIDA</span><span class="tag tag-accent">00 · contexto</span></div>
+          <h3>La velocidad está. La lógica compartida, todavía no.</h3>
+          <p>El sistema debe capturar la experiencia sin convertirla en burocracia: menos dependencia de la memoria individual, más capacidad de decidir juntos.</p>
+          <div class="context-facts">
+            <div><b>Fortaleza</b><span>Respuesta rápida</span></div>
+            <div><b>Fricción</b><span>Criterio disperso</span></div>
+            <div><b>Movimiento</b><span>De persona a sistema</span></div>
+          </div>
+        </div>
         <p class="panel-label" style="color:var(--accent-ink)">Hoy el conocimiento queda en</p>
         <ul class="chips" style="margin-bottom:32px">
           <li>La experiencia de cada persona</li><li>Conversaciones internas</li><li>Chats</li><li>Reuniones</li><li>Interpretaciones particulares</li><li>Formas individuales de organizar</li>
@@ -297,7 +333,7 @@
         <li><b>04</b>Aumentar la capacidad estratégica del equipo</li>
         <li><b>05</b>Mejorar la conexión entre estrategia y ejecución</li>
         <li><b>06</b>Incorporar factores externos al análisis</li>
-        <li><b>07</b>Conectar Paid Media con Data, CRM, SEO, Creatividad y negocio</li>
+        <li><b>07</b>Conectar Paid Media con sus áreas aliadas y negocio</li>
         <li><b>08</b>Detectar desviaciones a tiempo</li>
         <li><b>09</b>Mejorar el seguimiento presupuestal</li>
         <li><b>10</b>Generar una forma común de reaccionar</li>
@@ -370,17 +406,24 @@
       <p class="panel-label" style="color:var(--accent-ink)">Modelo general</p>
       <div class="equation">
         <b>Resultado digital</b><i>=</i>
-        <span class="eq-term">medios</span><i>+</i>
-        <span class="eq-term">creatividad</span><i>+</i>
-        <span class="eq-term">oferta</span><i>+</i>
-        <span class="eq-term">producto</span><i>+</i>
-        <span class="eq-term">experiencia</span><i>+</i>
-        <span class="eq-term">gestión comercial</span><i>+</i>
-        <span class="eq-term">medición</span><i>+</i>
-        <span class="eq-term">contexto</span>
+        <span class="eq-term has-tip" tabindex="0" data-tip="Canales, formatos, pujas y distribución de la inversión.">medios</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="La idea, el mensaje, la pieza y la experiencia creativa.">creatividad</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="La razón para elegir ahora: beneficio, precio y condiciones.">oferta</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="Lo que la persona encuentra después del clic.">producto</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="El recorrido completo hasta convertir o volver.">experiencia</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="La capacidad de atender, calificar y cerrar la demanda.">gestión comercial</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="Eventos, calidad de señal, CRM y fuentes propias.">medición</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="Mercado, competencia, estacionalidad y coyuntura.">contexto</span>
       </div>
       <p class="lead">Analizar más allá de CPM, CPC, CTR, CPA, ROAS y CPL. Esos indicadores describen la plataforma; el resultado ocurre en el negocio.</p>
     </div>
+
+    <ol class="linea" aria-label="Ruta para leer un resultado" data-reveal>
+      <li class="card card-light"><span class="card-index">01 · SEÑAL</span><h3>Qué cambió</h3><p>Entrega, atención, tráfico, conversión, costo o volumen. Primero describimos el dato sin explicar todavía.</p></li>
+      <li class="card card-light"><span class="card-index">02 · CONTEXTO</span><h3>Qué estaba alrededor</h3><p>Negocio, mercado, competencia, oferta, creatividad, CRM, producto y estacionalidad.</p></li>
+      <li class="card card-light"><span class="card-index">03 · VALOR</span><h3>Qué significa</h3><p>Conectamos la conversión con calidad, ingreso, margen, recurrencia y sostenibilidad.</p></li>
+      <li class="card card-light"><span class="card-index">04 · DECISIÓN</span><h3>Qué hacemos ahora</h3><p>La lectura termina en una acción priorizada, con responsable, señal de cambio y siguiente medición.</p></li>
+    </ol>
 
     <div class="columnas sep-lg" data-reveal>
       <div class="card card-light">
@@ -553,9 +596,9 @@
       <div>
         <p class="eyebrow eyebrow-dark"><span>08—13</span></p>
         <h2 id="equipo-title">Estructura del equipo</h2>
-        <p class="claim">Un núcleo de tres roles. <em>Cuatro interfaces vivas.</em></p>
+        <p class="claim">Un núcleo de tres roles. <em>Seis conexiones vivas.</em></p>
       </div>
-      <p>El framework no define los roles internos de Data, CRM, SEO o Creatividad. Define cómo Digital se conecta con ellos.</p>
+      <p>El framework no define los roles internos de las áreas aliadas. Define cómo Digital se conecta con Cuentas, Martech, Creatividad, Redes sociales orgánicas, Estrategia e investigación y Financiera.</p>
     </div>
 
     <div class="grid-3" data-reveal>
@@ -633,24 +676,24 @@
       <div class="section-heading" data-reveal>
         <div>
           <p class="eyebrow eyebrow-dark"><span>14—17</span></p>
-          <h2>Las cuatro interfaces</h2>
-        <p class="claim">Cada interfaz define cuándo se activa y <em>qué decisión busca.</em></p>
+          <h2>Las seis conexiones operativas</h2>
+        <p class="claim">Cada conexión define cuándo se activa y <em>qué decisión busca.</em></p>
         </div>
-        <p>Toda interfaz establece: cuándo se activa, qué entrega Digital, qué necesita recibir, quién coordina, qué decisión se busca y cómo queda documentado.</p>
+        <p>Toda conexión establece: cuándo se activa, qué entrega Digital, qué necesita recibir, quién coordina, qué decisión se busca y cómo queda documentado.</p>
       </div>
 
       <figure class="flow" tabindex="0" data-reveal style="margin-bottom:14px">
-        <svg viewBox="0 0 1160 300" role="img" aria-label="Las cuatro interfaces —Data, CRM y comercial, SEO y creatividad— siguen el mismo protocolo: se activan cuando hay una pregunta que Digital no puede responder solo, Digital entrega la pregunta y la decisión que espera, recibe el insumo validado con sus límites, y la interfaz termina en una decisión, no en un dato.">
+        <svg viewBox="0 0 1160 300" role="img" aria-label="Las seis conexiones con áreas aliadas siguen el mismo protocolo: se activan cuando hay una pregunta que Digital no puede responder solo, Digital entrega la pregunta y la decisión que espera, recibe el insumo validado con sus límites, y la conexión termina en una decisión, no en un dato.">
           <defs>
             <marker id="fa-int" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
           </defs>
-          <text class="fl-t-key" x="20" y="26">LAS CUATRO INTERFACES</text>
+          <text class="fl-t-key" x="20" y="26">PROTOCOLO DE CONEXIÓN</text>
           <rect class="fl-box" x="36" y="40" width="260" height="48" rx="10"/>
-          <text class="fl-t" x="166" y="70" text-anchor="middle">Digital ↔ Data</text>
+          <text class="fl-t" x="166" y="70" text-anchor="middle">Digital ↔ Martech</text>
           <rect class="fl-box" x="312" y="40" width="260" height="48" rx="10"/>
-          <text class="fl-t" x="442" y="70" text-anchor="middle">Digital ↔ CRM / Comercial</text>
+          <text class="fl-t" x="442" y="70" text-anchor="middle">Digital ↔ Cuentas</text>
           <rect class="fl-box" x="588" y="40" width="260" height="48" rx="10"/>
-          <text class="fl-t" x="718" y="70" text-anchor="middle">Digital ↔ SEO</text>
+          <text class="fl-t" x="718" y="70" text-anchor="middle">Digital ↔ Estrategia</text>
           <rect class="fl-box" x="864" y="40" width="260" height="48" rx="10"/>
           <text class="fl-t" x="994" y="70" text-anchor="middle">Digital ↔ Creatividad</text>
 
@@ -685,51 +728,71 @@
           <path class="fl-line" d="M590 210 H614" marker-end="url(#fa-int)"/>
           <path class="fl-line" d="M910 210 H934" marker-end="url(#fa-int)"/>
         </svg>
-        <figcaption><b>14—17.</b> Lo que cambia entre las cuatro interfaces es el contenido, no el mecanismo: cuándo se activa, qué entrega Digital, qué recibe y qué decisión habilita. Recorre las cuatro para ver su detalle.</figcaption>
+        <figcaption><b>14—17.</b> Lo que cambia entre las seis conexiones es el contenido, no el mecanismo: cuándo se activa, qué entrega Digital, qué recibe y qué decisión habilita. Recorre las seis para ver su detalle.</figcaption>
       </figure>
 
-      <div class="carrusel carrusel-ancho" aria-label="Las cuatro interfaces" data-reveal>
+      <div class="carrusel carrusel-ancho" aria-label="Las seis conexiones" data-reveal>
 
-      <article class="card card-light" data-tab="Data">
-          <h3>Digital ↔ Data</h3>
-          <p class="iface-sub">Medición, proyecciones, anomalías y cruces</p>
+      <article class="card card-light" data-tab="Martech">
+          <h3>Digital ↔ Martech (Data + CRM)</h3>
+          <p class="iface-sub">Señal, perfilación, calidad y valor</p>
           <div class="iface-body">
             <div><p class="panel-label">Se activa cuando</p><ul class="list-check"><li>Se construye estrategia</li><li>Se define medición</li><li>Se elaboran proyecciones</li><li>Se revisan resultados</li><li>Se detectan anomalías</li><li>Se cruzan plataformas con CRM</li><li>Se necesita entender calidad de datos</li></ul></div>
             <div><p class="panel-label">Digital entrega</p><ul class="chips chips-densa"><li>Objetivo</li><li>Pregunta</li><li>Hipótesis</li><li>Periodo</li><li>Indicadores</li><li>Segmentos</li><li>Fuentes</li><li>Decisión esperada</li></ul></div>
             <div><p class="panel-label">Digital recibe</p><ul class="chips chips-densa"><li>Datos validados</li><li>Fuente</li><li>Confiabilidad</li><li>Limitaciones</li><li>Tendencias</li><li>Comparaciones</li><li>Líneas base</li><li>Anomalías</li><li>Cruces</li></ul>
-              <p class="quote quote-sm sep-md">Data no recibe una solicitud de dashboard. Recibe una pregunta que necesitamos responder.</p></div>
+              <p class="quote quote-sm sep-md">Martech no recibe una solicitud de dashboard. Recibe una pregunta que necesitamos responder.</p></div>
           </div>
         </article>
 
-        <article class="card card-light" data-tab="CRM / Comercial">
-          <h3>Digital ↔ CRM / Comercial</h3>
-          <p class="iface-sub">Calidad, contactabilidad, venta y valor</p>
+        <article class="card card-light" data-tab="Cuentas">
+          <h3>Digital ↔ Cuentas</h3>
+          <p class="iface-sub">Solicitud, aprobación, presupuesto y estado</p>
           <div class="iface-body">
-            <div><p class="panel-label">Se activa cuando</p><ul class="list-check"><li>Hay campañas de leads</li><li>Se analiza calidad</li><li>Se construyen audiencias</li><li>Se evalúa conversión</li><li>Se necesita medir rentabilidad</li><li>Se detecta anomalía comercial</li></ul></div>
-            <div><p class="panel-label">Digital entrega</p><ul class="chips chips-densa"><li>Campaña</li><li>Fuente</li><li>Volumen</li><li>Costo</li><li>Oferta</li><li>Audiencia</li><li>Identificadores</li><li>Periodo</li></ul></div>
-            <div><p class="panel-label">Digital recibe</p><ul class="chips chips-densa"><li>Contactabilidad</li><li>Lead calificado</li><li>Avance comercial</li><li>Venta</li><li>Ingreso</li><li>Motivo de pérdida</li><li>Tiempo de respuesta</li><li>Recurrencia</li><li>Valor</li></ul>
-              <p class="quote quote-sm sep-md">La evaluación de performance no termina cuando el usuario envía un formulario.</p></div>
+            <div><p class="panel-label">Se activa cuando</p><ul class="list-check"><li>Entra una solicitud</li><li>Se define alcance, fecha o presupuesto</li><li>Se requiere aprobación del cliente</li><li>Cambia el estado de una campaña</li><li>Se necesita traducir una ruta comercial a medios</li><li>Hay que comunicar un riesgo o una decisión</li></ul></div>
+            <div><p class="panel-label">Digital entrega</p><ul class="chips chips-densa"><li>Objetivo</li><li>Ruta traducida</li><li>Plan</li><li>Presupuesto</li><li>Fechas</li><li>Estado</li><li>Riesgos</li><li>Próximos pasos</li></ul></div>
+            <div><p class="panel-label">Digital recibe</p><ul class="chips chips-densa"><li>Objetivo de negocio</li><li>Contexto</li><li>Aprobación</li><li>Fecha</li><li>Presupuesto</li><li>Feedback</li><li>Prioridad</li><li>Decisión</li></ul>
+              <p class="quote quote-sm sep-md">Cuentas no recibe un pedido técnico aislado. Recibe una ruta lista para coordinar con el cliente.</p></div>
           </div>
         </article>
 
-        <article class="card card-light" data-tab="SEO">
-          <h3>Digital ↔ SEO</h3>
-          <p class="iface-sub">Demanda, intención y términos emergentes</p>
+        <article class="card card-light" data-tab="Estrategia">
+          <h3>Digital ↔ Estrategia e investigación</h3>
+          <p class="iface-sub">Categoría, audiencia y oportunidades</p>
           <div class="iface-body">
-            <div><p class="panel-label">Se activa cuando</p><ul class="list-check"><li>Se analiza categoría</li><li>Se diseña contenido</li><li>Se construyen landings</li><li>Se investiga demanda</li><li>Se preparan temporadas</li><li>Se revisan tendencias</li></ul></div>
-            <div><p class="panel-label">Digital entrega</p><ul class="chips"><li>Objetivos</li><li>Términos pagados</li><li>Mensajes</li><li>Audiencias</li><li>Productos</li><li>Páginas</li><li>Resultados relevantes</li></ul></div>
-            <div><p class="panel-label">Digital recibe</p><ul class="chips"><li>Tendencias de búsqueda</li><li>Intención</li><li>Demanda</li><li>Competencia orgánica</li><li>Estacionalidad</li><li>Términos emergentes</li><li>Oportunidades</li></ul></div>
+            <div><p class="panel-label">Se activa cuando</p><ul class="list-check"><li>Se formula una pregunta de negocio</li><li>Se analiza categoría o audiencia</li><li>Se investigan demanda y tendencias</li><li>Se preparan temporadas</li><li>Se revisan estudios o contexto</li><li>Se detectan oportunidades</li></ul></div>
+            <div><p class="panel-label">Digital entrega</p><ul class="chips"><li>Objetivos</li><li>Mensajes</li><li>Audiencias</li><li>Productos</li><li>Términos pagados</li><li>Resultados relevantes</li><li>Hipótesis</li></ul></div>
+            <div><p class="panel-label">Digital recibe</p><ul class="chips"><li>Contexto</li><li>Estudios</li><li>Demanda</li><li>Competencia</li><li>Estacionalidad</li><li>Oportunidades</li><li>Aprendizajes</li></ul></div>
           </div>
         </article>
 
-        <article class="card card-light" data-tab="Creatividad / Contenido">
-          <h3>Digital ↔ Creatividad / Contenido</h3>
-          <p class="iface-sub">Hipótesis creativa, fatiga y variaciones</p>
+        <article class="card card-light" data-tab="Creatividad">
+          <h3>Digital ↔ Creatividad, arte y audiovisual</h3>
+          <p class="iface-sub">Ideas, formatos, fatiga y variaciones</p>
           <div class="iface-body">
             <div><p class="panel-label">Se activa cuando</p><ul class="list-check"><li>Se lanza campaña</li><li>Se diseña prueba</li><li>Existe fatiga</li><li>Cambia el contexto</li><li>Se introduce nueva oferta</li><li>Baja performance</li><li>Se necesita contenido coyuntural</li></ul></div>
             <div><p class="panel-label">Digital entrega</p><ul class="chips chips-densa"><li>Objetivo</li><li>Audiencia</li><li>Barrera</li><li>Contexto</li><li>Oferta</li><li>Hipótesis</li><li>Aprendizajes</li><li>Variables a probar</li><li>Especificaciones</li><li>Criterio de éxito</li></ul></div>
             <div><p class="panel-label">Digital recibe</p><ul class="chips"><li>Concepto</li><li>Mensajes</li><li>Variaciones</li><li>Formatos</li><li>Calendario</li><li>Versiones</li><li>Activos finales</li></ul>
-              <p class="quote quote-sm sep-md">Digital no solicita piezas. Plantea una necesidad estratégica que requiere una respuesta creativa.</p></div>
+              <p class="quote quote-sm sep-md">Digital no solicita piezas. Plantea una ruta y una necesidad de respuesta creativa.</p></div>
+          </div>
+        </article>
+
+        <article class="card card-light" data-tab="Redes sociales">
+          <h3>Digital ↔ Redes sociales (orgánicas)</h3>
+          <p class="iface-sub">Calendario, comunidad y amplificación</p>
+          <div class="iface-body">
+            <div><p class="panel-label">Se activa cuando</p><ul class="list-check"><li>Se coordina calendario paid + organic</li><li>Hay una publicación para amplificar</li><li>Cambian comentarios o comunidad</li><li>Se cruzan aprendizajes de pauta y orgánico</li><li>Se necesita contexto de conversación</li></ul></div>
+            <div><p class="panel-label">Digital entrega</p><ul class="chips"><li>Pauta</li><li>Audiencias</li><li>Resultados</li><li>Aprendizajes</li><li>Formatos</li><li>Oportunidades</li></ul></div>
+            <div><p class="panel-label">Digital recibe</p><ul class="chips"><li>Calendario</li><li>Publicaciones</li><li>Comentarios</li><li>Interacciones</li><li>Aprendizajes</li><li>Contexto de comunidad</li></ul></div>
+          </div>
+        </article>
+
+        <article class="card card-light" data-tab="Financiera">
+          <h3>Digital ↔ Financiera</h3>
+          <p class="iface-sub">Inversión, compras, soportes y cierre</p>
+          <div class="iface-body">
+            <div><p class="panel-label">Se activa cuando</p><ul class="list-check"><li>Se define presupuesto</li><li>Se solicita una orden de compra</li><li>Cambia inversión o periodo</li><li>Se requiere soporte de pauta</li><li>Se prepara cierre o conciliación</li></ul></div>
+            <div><p class="panel-label">Digital entrega</p><ul class="chips"><li>Inversión</li><li>Pacing</li><li>Campaña</li><li>Periodo</li><li>Estado</li><li>Soportes</li></ul></div>
+            <div><p class="panel-label">Digital recibe</p><ul class="chips"><li>Centro de costo</li><li>Aprobación</li><li>Orden de compra</li><li>Factura</li><li>Condiciones</li><li>Fecha de cierre</li></ul></div>
           </div>
         </article>
       </div>
@@ -781,14 +844,14 @@
     <div class="section-heading" data-reveal>
       <div>
         <p class="eyebrow"><span>18—21</span></p>
-        <h2 id="intel-title">Radar, brief y escenarios</h2>
-        <p class="claim">Radar de contexto, brief y <em>escenarios.</em></p>
+        <h2 id="intel-title">Radar, ruta y escenarios</h2>
+        <p class="claim">Radar de contexto, ruta y <em>escenarios.</em></p>
       </div>
-      <p>Cada cuenta debería tener una lectura periódica del entorno, un brief antes de activar y tres escenarios declarados.</p>
+      <p>Cada cuenta debería tener una lectura periódica del entorno, una ruta antes de activar y tres escenarios declarados.</p>
     </div>
 
     <figure class="flow" tabindex="0" data-reveal>
-      <svg viewBox="0 0 1160 410" role="img" aria-label="Radar, brief y escenarios. El radar de contexto lee el entorno de forma periódica y alimenta las preguntas mínimas; esas preguntas alimentan el brief de activación, que declara la línea base y la señal que obligaría a cambiar. De ahí salen tres escenarios. La operación corre en el escenario base hasta que aparece una señal declarada: si no aparece, se sigue en base; si aparece a favor se pasa al escenario favorable; si aparece en contra se pasa al restrictivo. Cualquiera de los dos cambios entra al análisis del punto 20, y lo aprendido vuelve al radar.">
+        <svg viewBox="0 0 1160 410" role="img" aria-label="Radar, ruta y escenarios. El radar de contexto lee el entorno de forma periódica y alimenta las preguntas mínimas; esas preguntas alimentan la ruta de activación, que declara la línea base y la señal que obligaría a cambiar. De ahí salen tres escenarios. La operación corre en el escenario base hasta que aparece una señal declarada: si no aparece, se sigue en base; si aparece a favor se pasa al escenario favorable; si aparece en contra se pasa al restrictivo. Cualquiera de los dos cambios entra al análisis del punto 20, y lo aprendido vuelve al radar.">
         <defs>
           <marker id="fa-18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
           <marker id="fy-18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-y" d="M0 0 L10 5 L0 10 z" fill="#3aa76d"/></marker>
@@ -806,7 +869,7 @@
         <text class="fl-t-sm" x="449" y="90" text-anchor="middle">18.2 · ¿qué debemos anticipar?</text>
 
         <rect class="fl-box" x="628" y="48" width="250" height="58" rx="10"/>
-        <text class="fl-t" x="753" y="72" text-anchor="middle">Brief de activación</text>
+        <text class="fl-t" x="753" y="72" text-anchor="middle">Ruta de activación</text>
         <text class="fl-t-sm" x="753" y="90" text-anchor="middle">19 · trece preguntas</text>
 
         <rect class="fl-box-key" x="932" y="48" width="208" height="58" rx="10"/>
@@ -856,7 +919,7 @@
         <path class="fl-line-loop" d="M600 361 H8 V77 H16" marker-end="url(#fl-18)"/>
         <text class="fl-edge" x="300" y="353" text-anchor="middle">lo aprendido entra al siguiente radar</text>
       </svg>
-      <figcaption><b>18.</b> El escenario no es un número optimista y otro pesimista: es una condición del entorno con una respuesta ya escrita. Por eso el brief declara la señal antes de activar. Si la señal se define después de que el contexto cambió, ya no es anticipación, es reacción.</figcaption>
+        <figcaption><b>18.</b> El escenario no es un número optimista y otro pesimista: es una condición del entorno con una respuesta ya escrita. Por eso la ruta declara la señal antes de activar. Si la señal se define después de que el contexto cambió, ya no es anticipación, es reacción.</figcaption>
     </figure>
 
     <div class="notas" data-reveal>
@@ -869,7 +932,7 @@
       </div>
 
       <div class="card">
-        <span class="card-index">19 · BRIEF ESTRATÉGICO DE ACTIVACIÓN</span>
+        <span class="card-index">19 · RUTA ESTRATÉGICA DE ACTIVACIÓN</span>
         <h3>Trece preguntas antes de una activación relevante</h3>
         <ol class="list-check" style="margin-top:16px;counter-reset:none">
           <li>¿Qué está pasando en el negocio?</li>
@@ -903,10 +966,25 @@
     <div class="divider" id="escenarios">
       <h3 class="sub-heading" data-reveal><span class="num">21</span> Planificamos en tres escenarios, no en uno</h3>
       <p class="lead" style="margin:-14px 0 30px" data-reveal>Cada escenario declara supuestos, presupuesto, resultado esperado, riesgos, señales y acción. El escenario no es un número: es una condición del entorno con una respuesta preparada.</p>
-      <div class="columnas" data-reveal>
-        <div class="card" style="--tono:var(--yellow)"><span class="card-index">ESCENARIO BASE</span><h4>Condiciones normales</h4><p>El comportamiento esperable si nada relevante cambia. Es la referencia contra la que se leen los otros dos.</p></div>
-        <div class="card" style="--tono:var(--green)"><span class="card-index" style="color:var(--green)">ESCENARIO FAVORABLE</span><h4>Más demanda o eficiencia</h4><p>Qué haríamos si el contexto empuja a favor: dónde ampliamos y con qué señal lo activamos.</p></div>
-        <div class="card" style="--tono:var(--red-soft)"><span class="card-index" style="color:var(--red-soft)">ESCENARIO RESTRICTIVO</span><h4>Menos demanda o más costo</h4><p>Qué haríamos si el contexto se cierra: qué protegemos, qué recortamos y qué le anticipamos al cliente.</p></div>
+      <div class="columnas" aria-label="Tres escenarios de planificación" data-reveal>
+        <article class="card" style="--tono:var(--yellow)">
+          <span class="card-index">01 · ESCENARIO BASE</span>
+          <h4>Condiciones normales</h4>
+          <p>La referencia contra la que se leen los otros dos escenarios.</p>
+          <dl class="filas-dato"><div><dt>Se activa cuando</dt><dd>El contexto se mantiene dentro de la línea base.</dd></div><div><dt>Respuesta</dt><dd>Operar, monitorear y aprender sin sobrerreaccionar.</dd></div></dl>
+        </article>
+        <article class="card" style="--tono:var(--green)">
+          <span class="card-index">02 · ESCENARIO FAVORABLE</span>
+          <h4>Más demanda o eficiencia</h4>
+          <p>El contexto empuja a favor y aparece una señal declarada.</p>
+          <dl class="filas-dato"><div><dt>Señal</dt><dd>Más volumen, mejor calidad o menor costo sostenible.</dd></div><div><dt>Respuesta</dt><dd>Ampliar donde la señal se sostiene y proteger el aprendizaje.</dd></div></dl>
+        </article>
+        <article class="card" style="--tono:var(--red-soft)">
+          <span class="card-index">03 · ESCENARIO RESTRICTIVO</span>
+          <h4>Menos demanda o más costo</h4>
+          <p>El contexto se cierra y la respuesta ya está preparada.</p>
+          <dl class="filas-dato"><div><dt>Señal</dt><dd>Menor calidad, mayor costo o riesgo comercial.</dd></div><div><dt>Respuesta</dt><dd>Proteger prioridades, recortar exposición y anticipar al cliente.</dd></div></dl>
+        </article>
       </div>
     </div>
   </div>
@@ -1593,7 +1671,7 @@
         <span class="card-index">35 · ETAPA 1 — VALIDAR LA ALERTA</span>
         <h3>Evitar optimizar por ruido</h3>
         <ul class="list-check sep">
-          <li>¿La variación es real?</li><li>¿Existe volumen suficiente?</li><li>¿La ventana temporal es adecuada?</li><li>¿Puede ser ruido?</li><li>¿Hay retrasos de atribución?</li><li>¿El dato está correctamente medido?</li><li>¿Existe estacionalidad diaria normal?</li><li>¿Hubo cambios recientes?</li>
+          <li>¿La variación es real?</li><li>¿Existe volumen suficiente?</li><li>¿La ventana temporal es adecuada?</li><li>¿Puede ser ruido?</li><li>¿Hay retrasos en la señal?</li><li>¿El dato está correctamente medido?</li><li>¿Existe estacionalidad diaria normal?</li><li>¿Hubo cambios recientes?</li>
         </ul>
       </div>
       <div class="card card-light">
@@ -1746,7 +1824,7 @@
     </div>
 
     <figure class="flow" tabindex="0" data-reveal>
-      <svg viewBox="0 0 1160 300" role="img" aria-label="La puerta de entrada: llega una solicitud, se revisa si trae los mínimos de su tipo; si no los trae se devuelve indicando exactamente qué falta y vuelve a entrar; si los trae se clasifica con tipo, responsable, fecha y horas, entra a la cola de priorización del punto 86 y sigue la ruta de la solicitud del punto 87.">
+        <svg viewBox="0 0 1160 300" role="img" aria-label="La puerta de entrada: llega una solicitud, se revisa si trae los mínimos de su tipo; si no los trae se devuelve indicando exactamente qué falta y vuelve a entrar; si los trae se clasifica con tipo, responsable, fecha y complejidad, entra a la cola de priorización del punto 86 y sigue la ruta de la solicitud del punto 87.">
         <defs>
           <marker id="fa-94" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
           <marker id="fy-94" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-y" d="M0 0 L10 5 L0 10 z" fill="#3aa76d"/></marker>
@@ -1764,7 +1842,7 @@
 
         <rect class="fl-box" x="490" y="70" width="230" height="58" rx="10"/>
         <text class="fl-t" x="605" y="94" text-anchor="middle">Se clasifica</text>
-        <text class="fl-t-sm" x="605" y="112" text-anchor="middle">tipo · responsable · fecha · horas</text>
+        <text class="fl-t-sm" x="605" y="112" text-anchor="middle">tipo · responsable · fecha · complejidad</text>
 
         <rect class="fl-box-key" x="770" y="70" width="180" height="58" rx="10"/>
         <text class="fl-t-b" x="860" y="94" text-anchor="middle">Entra a la cola</text>
@@ -1800,13 +1878,13 @@
           <li><b>Qué se necesita:</b> el entregable esperado, no la tarea suelta.</li>
           <li><b>Para cuándo</b> se necesita.</li>
           <li><b>Qué decisión o resultado habilita.</b></li>
-          <li><b>Responsable y horas estimadas:</b> lo asigna el planner al clasificar.</li>
+          <li><b>Responsable y complejidad:</b> lo asigna el planner al clasificar.</li>
         </ul>
       </div>
       <div class="card card-light">
         <span class="card-index">94.8 · QUÉ PASA SI FALTA ALGO</span>
         <h3>Se devuelve diciendo qué falta, no se ejecuta a medias</h3>
-        <p class="sep-sm">Ejecutar con información incompleta produce un entregable que hay que rehacer, y el retrabajo no aparece en ningún cuadro de horas: aparece como demora.</p>
+        <p class="sep-sm">Ejecutar con información incompleta produce un entregable que hay que rehacer, y el retrabajo no aparece en ningún cuadro: aparece como demora.</p>
         <p class="quote quote-sm sep-md">Lo que solo existe en un chat todavía no es una solicitud.<small>Regla 81 · 12</small></p>
       </div>
     </div>
@@ -1840,8 +1918,9 @@
             <div>
               <p class="panel-label">Suma valor, no bloquea</p>
               <ul class="chips" id="sol-des"></ul>
-              <p class="panel-label sep-lg">Entregable y tiempo de gestión</p>
+              <p class="panel-label sep-lg">Entregable</p>
               <p id="sol-sale" style="margin:0;font-weight:700"></p>
+              <div class="request-sla" aria-live="polite"><span>SLA estimado</span><b id="sol-sla">—</b></div>
               <p class="panel-label sep-lg">Se conecta con</p>
               <p id="sol-conecta" style="margin:0;color:var(--fg-muted);font-size:var(--fs-ui)"></p>
             </div>
@@ -1866,19 +1945,19 @@
       <p>La ruta de reacción (34—41) define cómo pensamos una desviación. Este proceso define cómo se recibe, se prioriza, se prueba y se cierra el trabajo de optimización en pauta. Es la operación diaria del pilar de excelencia operativa.</p>
     </div>
 
-    <h3 class="sub-heading" id="priorizacion" data-reveal><span class="num">86</span> Sistema de priorización de solicitudes</h3>
+    <h3 class="sub-heading" id="priorizacion" data-reveal><span class="num">86</span> Sistema de priorización y tiempos de servicio</h3>
+    <p class="lead" data-reveal style="margin-bottom:22px">El reloj arranca cuando el correo llega con ruta, accesos e insumos completos. Los tiempos son días hábiles y dependen de la complejidad: baja (un canal o ajuste simple), media (varias campañas o mercados) y alta (arquitectura multicanal, nueva medición o integración).</p>
     <div class="table-wrap" tabindex="0" data-reveal>
       <table>
-        <caption class="sr-only">Tiempo de gestión por tipo de solicitud. La barra compara horas; «Otros» se mide en días y queda fuera de escala.</caption>
-        <thead><tr><th>Solicitud</th><th>Entregable</th><th>Tiempo de gestión</th></tr></thead>
+        <caption class="sr-only">Días hábiles de gestión por entregable según su complejidad. La barra muestra el rango de baja a alta sobre una escala de 0 a 7 días; el punto marca la complejidad media.</caption>
+        <thead><tr><th>Entregable</th><th>Baja</th><th>Media</th><th>Alta</th><th class="t-rango-h">Rango · 0 a 7 días</th></tr></thead>
         <tbody>
-          <tr><td>Incendio</td><td>Respuesta y acciones</td><td><span class="barra" style="--v:0.3333"><i aria-hidden="true"></i><b>1 hora</b></span></td></tr>
-          <tr><td>Optimización</td><td>Bitácora</td><td><span class="barra" style="--v:0.6667"><i aria-hidden="true"></i><b>2 horas</b> <small>mismo día</small></span></td></tr>
-          <tr><td>Informes</td><td>Informe</td><td><span class="barra" style="--v:0.6667"><i aria-hidden="true"></i><b>2 horas</b></span></td></tr>
-          <tr><td>Presupuesto</td><td>Flow, forecast, ejecutados</td><td><span class="barra" style="--v:0.6667"><i aria-hidden="true"></i><b>2 horas</b></span></td></tr>
-          <tr><td>Propuesta</td><td>Presentación</td><td><span class="barra" style="--v:1.0"><i aria-hidden="true"></i><b>3 horas</b></span></td></tr>
-          <tr><td>Implementación</td><td>Reporte de implementación</td><td><span class="barra" style="--v:1.0"><i aria-hidden="true"></i><b>3 horas</b> <small>mismo día</small></span></td></tr>
-          <tr><td>Otros</td><td>Se define con el responsable</td><td><span class="barra barra-fuera"><i aria-hidden="true"></i><b>2 días</b> <small>fuera de escala</small></span></td></tr>
+          <tr><td>Plan de medios</td><td>1 día</td><td>2 días</td><td>4 días</td><td class="t-rango"><span class="rango" style="--a:1;--m:2;--b:4" aria-hidden="true"><i></i><b></b></span></td></tr>
+          <tr><td>Activación de pauta</td><td>2 días</td><td>4 días</td><td>7 días</td><td class="t-rango"><span class="rango" style="--a:2;--m:4;--b:7" aria-hidden="true"><i></i><b></b></span></td></tr>
+          <tr><td>Tracking / QA</td><td>3 días</td><td>5 días</td><td>7 días</td><td class="t-rango"><span class="rango" style="--a:3;--m:5;--b:7" aria-hidden="true"><i></i><b></b></span></td></tr>
+          <tr><td>Reporte operativo</td><td>1 día</td><td>2 días</td><td>3 días</td><td class="t-rango"><span class="rango" style="--a:1;--m:2;--b:3" aria-hidden="true"><i></i><b></b></span></td></tr>
+          <tr><td>Diagnóstico / cierre</td><td>3 días</td><td>5 días</td><td>7 días</td><td class="t-rango"><span class="rango" style="--a:3;--m:5;--b:7" aria-hidden="true"><i></i><b></b></span></td></tr>
+          <tr><td>Audiencias / First-Party Data</td><td>1 día</td><td>2 días</td><td>3 días</td><td class="t-rango"><span class="rango" style="--a:1;--m:2;--b:3" aria-hidden="true"><i></i><b></b></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -1886,12 +1965,12 @@
       <div class="card">
         <span class="card-index">86.1 · CÓMO SE PRIORIZA</span>
         <h3>La prioridad se estima según la fecha de entrega, no según quién la pide</h3>
-        <p class="sep-sm">El tiempo de gestión es una estimación de esfuerzo. La fecha de entrega es la que ordena la cola.</p>
+        <p class="sep-sm">La complejidad y la fecha de entrega ordenan la cola. Las urgencias se marcan como <b>URGENTE</b>; Planner prioriza y Dirección Digital aprueba cualquier excepción.</p>
       </div>
       <div class="card">
         <span class="card-index">86.2 · QUÉ REGISTRA TODA SOLICITUD</span>
         <h4>Tres datos mínimos</h4>
-        <ul class="chips sep"><li>Responsable</li><li>Fecha de entrega</li><li>Horas de gestión</li></ul>
+        <ul class="chips sep"><li>Responsable</li><li>Fecha de entrega</li><li>Complejidad</li></ul>
         <p class="sep">Sin estos tres campos la solicitud no entra a la cola: no se puede priorizar ni medir.</p>
       </div>
     </div>
@@ -1907,7 +1986,7 @@
       </div>
 
       <figure class="flow" tabindex="0" data-reveal>
-        <svg viewBox="0 0 1240 280" role="img" aria-label="Flujo de recepción y clasificación: la solicitud entra, se define cliente y tipo, se asigna responsable con fecha y horas, y una compuerta de presupuesto y material decide si pasa a ejecución o se rechaza.">
+        <svg viewBox="0 0 1240 280" role="img" aria-label="Flujo de recepción y clasificación: la solicitud entra, se define cliente y tipo, se asigna responsable con fecha y complejidad, y una compuerta de presupuesto y material decide si pasa a ejecución o se rechaza.">
           <defs>
             <marker id="fa-87a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
             <marker id="fy-87a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-y" d="M0 0 L10 5 L0 10 z" fill="#3aa76d"/></marker>
@@ -1924,11 +2003,11 @@
 
           <rect class="fl-box" x="422" y="81" width="170" height="58" rx="10"/>
           <text class="fl-t" x="507" y="108" text-anchor="middle">Tipo de solicitud</text>
-          <text class="fl-t-sm" x="507" y="126" text-anchor="middle">define entregable y horas</text>
+          <text class="fl-t-sm" x="507" y="126" text-anchor="middle">define entregable y complejidad</text>
 
           <rect class="fl-box" x="638" y="81" width="180" height="58" rx="10"/>
           <text class="fl-t" x="728" y="108" text-anchor="middle">Responsable</text>
-          <text class="fl-t-sm" x="728" y="126" text-anchor="middle">fecha de entrega · horas</text>
+          <text class="fl-t-sm" x="728" y="126" text-anchor="middle">fecha de entrega · complejidad</text>
 
           <path class="fl-dec" d="M968 52 L1072 110 L968 168 L864 110 Z"/>
           <text class="fl-t-b" x="968" y="105" text-anchor="middle">¿Presupuesto</text>
@@ -2025,7 +2104,7 @@
         <div class="card">
           <span class="card-index">87.3 · TIEMPOS DE EJECUCIÓN</span>
           <h3>El tiempo se declara al recibir, no al entregar</h3>
-          <p class="sep-sm">La estimación de horas se fija en la clasificación y se compara contra lo realmente ejecutado. Esa diferencia es lo que permite ajustar el sistema de priorización.</p>
+          <p class="sep-sm">El tiempo de servicio se fija en la clasificación y se compara contra lo realmente ejecutado. Esa diferencia permite ajustar el sistema de priorización.</p>
         </div>
       </div>
     </div>
@@ -2033,6 +2112,7 @@
     <div class="divider" id="seguimiento">
       <h3 class="sub-heading" data-reveal><span class="num">88</span> Ciclo de seguimiento de la optimización</h3>
       <p class="lead" data-reveal style="margin-bottom:26px">Cada optimización ejecutada abre dos rastros en paralelo: uno documental y uno de consumo. Ninguno de los dos es opcional.</p>
+      <p class="quote quote-sm" data-reveal style="margin-bottom:22px">Cadencia operativa: revisar al día 1, día 7, día 14 y día 30 hábil, ajustando la profundidad según la complejidad y el objetivo de la campaña.</p>
       <figure class="flow" tabindex="0" data-reveal>
         <svg viewBox="0 0 1160 300" role="img" aria-label="Toda optimización ejecutada abre dos rastros: bitácora, que alimenta el registro de cierre del punto 41, y consumos, que se revisa contra la automatización y llega al dashboard del control presupuestal.">
           <defs>
@@ -2310,7 +2390,7 @@
           <div class="output-line"><span>Código de la prueba</span><output id="out-combo"></output></div>
           <div class="output-line"><span>Lectura de la combinación</span><output id="out-combo-read"></output></div>
           <div class="output-line"><span>Nomenclatura del anuncio · [FORMATO]_[Ángulo]_[CTA]_[Versión]</span><output id="out-combo-name"></output></div>
-          <p class="calc-note sin-margen">Las tres variables describen una pieza: cada combinación es un anuncio distinto dentro del mismo grupo. La versión cambia cuando se renueva la pieza. Si se busca atribuir efecto a una variable, las otras se mantienen constantes.</p>
+          <p class="calc-note sin-margen">Las tres variables describen una pieza: cada combinación es un anuncio distinto dentro del mismo grupo. La versión cambia cuando se renueva la pieza. Si se busca aislar el efecto de una variable, las otras se mantienen constantes.</p>
         </div>
       </div>
 
@@ -2348,7 +2428,7 @@
       <div class="quote" data-reveal style="margin-bottom:18px">Identificar qué variables de segmentación y comunicación podemos combinar para optimizar la generación y la gestión del lead.<small>Objetivo declarado</small></div>
 
       <figure class="flow" tabindex="0" data-reveal>
-        <svg viewBox="0 0 1160 400" role="img" aria-label="Un objetivo abre tres frentes en paralelo: campañas de conversión con la hipótesis del flujo de información, el cruce de segmentación por comunicación que produce tres combinaciones a evaluar, y los puntos de contacto validados con informe de atribución.">
+        <svg viewBox="0 0 1160 400" role="img" aria-label="Un objetivo abre tres frentes en paralelo: campañas de conversión con la hipótesis del flujo de información, el cruce de segmentación por comunicación que produce tres combinaciones a evaluar, y los puntos de contacto validados con un informe de interacción.">
           <defs>
             <marker id="fa-91" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
           </defs>
@@ -2410,7 +2490,7 @@
           <text class="fl-t" x="590" y="352" text-anchor="middle">al resto de canales</text>
           <rect class="fl-box" x="720" y="292" width="200" height="70" rx="10"/>
           <text class="fl-t" x="820" y="322" text-anchor="middle">Informe de</text>
-          <text class="fl-t" x="820" y="340" text-anchor="middle">atribución</text>
+          <text class="fl-t" x="820" y="340" text-anchor="middle">interacción</text>
           <rect class="fl-box-key" x="950" y="292" width="190" height="70" rx="10"/>
           <text class="fl-t-b" x="1045" y="316" text-anchor="middle">Sitio web · Orgánico</text>
           <text class="fl-t-b" x="1045" y="335" text-anchor="middle">Referidos</text>
@@ -2419,21 +2499,21 @@
           <path class="fl-line" d="M690 327 H714" marker-end="url(#fa-91)"/>
           <path class="fl-line" d="M920 327 H944" marker-end="url(#fa-91)"/>
         </svg>
-        <figcaption><b>91.</b> Los tres frentes comparten objetivo pero se validan con fuentes distintas: interacción, combinaciones y atribución. Cada variable de comunicación lleva inmersas sus tres variantes de mensaje, así que el cruce produce más combinaciones de las que se ven en el diagrama.</figcaption>
+        <figcaption><b>91.</b> Los tres frentes comparten objetivo pero se validan con fuentes distintas: interacción, combinaciones y resultados observados. Cada variable de comunicación lleva inmersas sus tres variantes de mensaje, así que el cruce produce más combinaciones de las que se ven en el diagrama.</figcaption>
       </figure>
 
       <div class="notas sep-lg" data-reveal>
         <div class="card">
           <span class="card-index">91.1 · POR QUÉ SE CRUZAN DOS CAPAS</span>
           <h3>Optimizar solo segmentación deja la mitad de la explicación afuera</h3>
-          <p class="sep-sm">Si el mensaje no cambia, la audiencia nueva recibe el mismo estímulo: no se sabe si falló la segmentación o el argumento. El diseño del test permite identificar qué variable cambió; la atribución de plataforma, por sí sola, no demuestra causalidad.</p>
+          <p class="sep-sm">Si el mensaje no cambia, la audiencia nueva recibe el mismo estímulo: no se sabe si falló la segmentación o el argumento. El diseño del test permite identificar qué variable cambió y qué resultado observado acompaña la decisión.</p>
         </div>
         <div class="card">
           <span class="card-index">91.2 · QUÉ IMPLICA CADA HIPÓTESIS</span>
           <h3>La acción cambia según lo que creemos</h3>
           <ul class="list-check sep">
             <li><b>Flujo de información:</b> se reimplementa ajustando el objetivo, no se amplía audiencia.</li>
-            <li><b>Pauta como difusión:</b> el efecto se busca fuera de la campaña, en el informe de atribución.</li>
+            <li><b>Pauta como difusión:</b> el efecto se busca fuera de la campaña, en los resultados observados en el ecosistema.</li>
           </ul>
         </div>
       </div>
@@ -2596,7 +2676,6 @@
         <ul class="chips sep"><li>Contención</li><li>Escalamiento</li><li>Comunicación rápida</li></ul>
       </div>
     </div>
-    </div>
 
     <div class="notas sep-lg" data-reveal>
       <div class="card">
@@ -2655,13 +2734,13 @@
         </div>
         <div class="card versus-no">
           <span class="card-index">53 · QUÉ NO HACER</span>
-          <ul class="list-check list-cross sep"><li>Reaccionar a ruido diario.</li><li>Modificar todo simultáneamente.</li><li>Asumir que el problema es la plataforma.</li><li>Atribuir causalidad sin evidencia.</li><li>Ocultar alertas relevantes.</li><li>Esperar una solución completa para comunicar un riesgo.</li><li>Cambiar proyecciones sin revisar supuestos.</li><li>Dejar decisiones importantes solo en chat.</li><li>Cerrar sin documentar aprendizaje.</li></ul>
+          <ul class="list-check list-cross sep"><li>Reaccionar a ruido diario.</li><li>Modificar todo simultáneamente.</li><li>Asumir que el problema es la plataforma.</li><li>Suponer causalidad sin evidencia.</li><li>Ocultar alertas relevantes.</li><li>Esperar una solución completa para comunicar un riesgo.</li><li>Cambiar proyecciones sin revisar supuestos.</li><li>Dejar decisiones importantes solo en chat.</li><li>Cerrar sin documentar aprendizaje.</li></ul>
         </div>
       </div>
 
       
       <figure class="flow" tabindex="0" data-reveal>
-        <svg viewBox="0 0 1160 370" role="img" aria-label="Mapa de escalamiento. Paid Media es donde se detecta la situación. Sube a Planner cuando la causa supera Paid Media, cambian los supuestos o el impacto es importante; y de Planner sube a Dirección Digital cuando hay riesgo de inversión, cambio de compromisos o riesgo reputacional. En paralelo pasa de lado a cuatro disciplinas: a Data por dudas sobre datos o necesidad de cruce, a CRM y Comercial por calidad, contactabilidad, venta o capacidad, a Creatividad por fatiga, falta de relevancia o nueva hipótesis, y a Técnica y Tracking por errores de medición, landing, integración o etiquetado.">
+        <svg viewBox="0 0 1160 370" role="img" aria-label="Mapa de escalamiento. Paid Media es donde se detecta la situación. Sube a Planner cuando la causa supera Paid Media, cambian los supuestos o el impacto es importante; y de Planner sube a Dirección Digital cuando hay riesgo de inversión, cambio de compromisos o riesgo reputacional. En paralelo pasa de lado a seis áreas aliadas: Martech, Cuentas, Creatividad, Redes sociales orgánicas, Estrategia e investigación y Financiera.">
           <defs>
           <marker id="fa-54" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
           <marker id="fy-54" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-y" d="M0 0 L10 5 L0 10 z" fill="#3aa76d"/></marker>
@@ -2691,28 +2770,38 @@
           <text class="fl-edge" x="336" y="130">riesgo de inversión, cambio de compromisos</text>
           <text class="fl-edge" x="336" y="146">o riesgo reputacional</text>
 
-          <rect class="fl-box" x="700" y="48" width="440" height="58" rx="10"/>
-          <text class="fl-t" x="920" y="72" text-anchor="middle">Data</text>
-          <text class="fl-t-sm" x="920" y="90" text-anchor="middle">dudas sobre datos, inconsistencias o necesidad de cruce</text>
+          <rect class="fl-box" x="700" y="34" width="440" height="44" rx="10"/>
+          <text class="fl-t" x="920" y="53" text-anchor="middle">Martech (Data + CRM)</text>
+          <text class="fl-t-sm" x="920" y="68" text-anchor="middle">señal, calidad, perfiles y cruces</text>
 
-          <rect class="fl-box" x="700" y="126" width="440" height="58" rx="10"/>
-          <text class="fl-t" x="920" y="150" text-anchor="middle">CRM y Comercial</text>
-          <text class="fl-t-sm" x="920" y="168" text-anchor="middle">calidad, contactabilidad, venta o capacidad</text>
+          <rect class="fl-box" x="700" y="88" width="440" height="44" rx="10"/>
+          <text class="fl-t" x="920" y="107" text-anchor="middle">Cuentas</text>
+          <text class="fl-t-sm" x="920" y="122" text-anchor="middle">solicitud, presupuesto, aprobación y estado</text>
 
-          <rect class="fl-box" x="700" y="204" width="440" height="58" rx="10"/>
-          <text class="fl-t" x="920" y="228" text-anchor="middle">Creatividad</text>
-          <text class="fl-t-sm" x="920" y="246" text-anchor="middle">fatiga, falta de relevancia o nueva hipótesis</text>
+          <rect class="fl-box" x="700" y="142" width="440" height="44" rx="10"/>
+          <text class="fl-t" x="920" y="161" text-anchor="middle">Creatividad, arte y audiovisual</text>
+          <text class="fl-t-sm" x="920" y="176" text-anchor="middle">fatiga, relevancia, formatos y variaciones</text>
 
-          <rect class="fl-box" x="700" y="282" width="440" height="58" rx="10"/>
-          <text class="fl-t" x="920" y="306" text-anchor="middle">Técnica y Tracking</text>
-          <text class="fl-t-sm" x="920" y="324" text-anchor="middle">error de medición, landing, integración o etiquetado</text>
+          <rect class="fl-box" x="700" y="196" width="440" height="44" rx="10"/>
+          <text class="fl-t" x="920" y="215" text-anchor="middle">Redes sociales orgánicas</text>
+          <text class="fl-t-sm" x="920" y="230" text-anchor="middle">calendario, conversación y amplificación</text>
+
+          <rect class="fl-box" x="700" y="250" width="440" height="44" rx="10"/>
+          <text class="fl-t" x="920" y="269" text-anchor="middle">Estrategia e investigación</text>
+          <text class="fl-t-sm" x="920" y="284" text-anchor="middle">categoría, audiencia, contexto y oportunidades</text>
+
+          <rect class="fl-box" x="700" y="304" width="440" height="44" rx="10"/>
+          <text class="fl-t" x="920" y="323" text-anchor="middle">Financiera</text>
+          <text class="fl-t-sm" x="920" y="338" text-anchor="middle">inversión, compras, soportes y cierre</text>
 
           <path class="fl-line" d="M320 325 H660"/>
-          <path class="fl-line" d="M660 325 V77"/>
-          <path class="fl-line" d="M660 77 H694" marker-end="url(#fa-54)"/>
-          <path class="fl-line" d="M660 155 H694" marker-end="url(#fa-54)"/>
-          <path class="fl-line" d="M660 233 H694" marker-end="url(#fa-54)"/>
-          <path class="fl-line" d="M660 311 H694" marker-end="url(#fa-54)"/>
+          <path class="fl-line" d="M660 325 V56"/>
+          <path class="fl-line" d="M660 56 H694" marker-end="url(#fa-54)"/>
+          <path class="fl-line" d="M660 110 H694" marker-end="url(#fa-54)"/>
+          <path class="fl-line" d="M660 164 H694" marker-end="url(#fa-54)"/>
+          <path class="fl-line" d="M660 218 H694" marker-end="url(#fa-54)"/>
+          <path class="fl-line" d="M660 272 H694" marker-end="url(#fa-54)"/>
+          <path class="fl-line" d="M660 326 H694" marker-end="url(#fa-54)"/>
         </svg>
         <figcaption><b>54.</b> Escalar no es pedir ayuda: es mover la decisión al nivel que puede tomarla. Hacia arriba cambia quién decide; hacia el lado cambia quién tiene la causa. Lo que no cambia en ningún caso es que Paid Media sigue siendo el punto de contacto de la situación.</figcaption>
       </figure>
@@ -2724,10 +2813,12 @@
           <ul class="list-check sep">
             <li><b>Performance → Planner:</b> la causa supera Paid Media, se necesita cambio estratégico, cambian supuestos, hay impacto importante o se requiere otra disciplina.</li>
             <li><b>Planner → Dirección Digital:</b> riesgo importante de inversión, afectación de la relación con el cliente, cambio de compromisos, riesgo reputacional o priorización especial.</li>
-            <li><b>Digital → Data:</b> dudas sobre datos, inconsistencias o necesidad de cruce.</li>
-            <li><b>Digital → CRM / Comercial:</b> calidad, contactabilidad, venta o capacidad.</li>
-            <li><b>Digital → Creatividad:</b> fatiga, falta de relevancia o nueva hipótesis.</li>
-            <li><b>Digital → Técnica / Tracking:</b> error de medición, landing, integración o etiquetado.</li>
+            <li><b>Digital → Martech:</b> dudas sobre datos, calidad de señal, CRM o necesidad de cruce.</li>
+            <li><b>Digital → Cuentas:</b> solicitud, presupuesto, aprobación, venta o capacidad.</li>
+            <li><b>Digital → Creatividad, arte y audiovisual:</b> fatiga, falta de relevancia o nueva hipótesis.</li>
+            <li><b>Digital → Redes sociales orgánicas:</b> calendario, conversación, amplificación o contexto.</li>
+            <li><b>Digital → Estrategia e investigación:</b> categoría, audiencia, contexto u oportunidades.</li>
+            <li><b>Digital → Financiera:</b> inversión, compras, soportes o cierre.</li>
           </ul>
         </div>
         <div class="card">
@@ -3134,44 +3225,49 @@
         <p>Una herramienta local que habla directamente con las APIs de las plataformas. Lo que sigue es la capacidad instalada hoy, no la que quisiéramos tener. Es también la base de la ingesta: el pacing automatizado de <b>29.3</b> parte de aquí, no de cero.</p>
       </div>
 
-      <div class="carrusel" aria-label="Las seis funciones de Media Bridge" data-reveal>
-        <div class="card" data-tab="Consulta">
-          <span class="card-index">96.1 · CONSULTA</span>
+      <div class="bridge-capabilities" data-reveal aria-label="Capacidades instaladas de Media Bridge">
+        <article class="bridge-capability">
+          <header><span>96.1</span><b>Consulta</b></header>
           <h3>Las cuatro plataformas en un solo lugar</h3>
-          <p>Cuentas, campañas, conjuntos, anuncios e insights de Meta, Google Ads, LinkedIn y TikTok, más GA4 como fuente de comportamiento. Filtro por cliente, cuenta, rango y nivel, con exportación a CSV y Excel.</p>
-        </div>
-        <div class="card" data-tab="Alertas">
-          <span class="card-index">96.2 · ALERTAS</span>
+          <p>Cuentas, campañas, conjuntos, anuncios e insights de Meta, Google Ads, LinkedIn y TikTok, más GA4. Filtro por cliente, cuenta, rango y nivel, con exportación a CSV y Excel.</p>
+          <small>Meta · Google Ads · LinkedIn · TikTok · GA4</small>
+        </article>
+        <article class="bridge-capability">
+          <header><span>96.2</span><b>Alertas</b></header>
           <h3>Dos revisiones automáticas por semana</h3>
-          <p>Reglas por cuenta y por campaña que comparan los últimos siete días completos contra los siete anteriores. Corren martes y jueves a las 8:00 a. m. y notifican por Google Chat al canal del cliente.</p>
-        </div>
-        <div class="card" data-tab="Ciclo del incidente">
-          <span class="card-index">96.3 · CICLO DEL INCIDENTE</span>
+          <p>Reglas por cuenta y campaña comparan siete días completos contra los siete anteriores y notifican por Google Chat al canal del cliente.</p>
+          <small>Martes y jueves · 8:00 a. m.</small>
+        </article>
+        <article class="bridge-capability">
+          <header><span>96.3</span><b>Incidentes</b></header>
           <h3>La alerta no se repite: se sigue</h3>
-          <p>Abre incidente, actualiza el valor mientras la condición siga activa, recuerda una sola vez a las 48 horas y resuelve cuando el indicador vuelve a estado sano o la campaña se apaga. Hay una alerta específica para inversión con cero resultados.</p>
-        </div>
-        <div class="card" data-tab="Seguimiento">
-          <span class="card-index">96.4 · SEGUIMIENTO</span>
+          <p>Abre incidente, actualiza mientras la condición siga activa, recuerda una sola vez a las 48 horas y resuelve al volver a estado sano.</p>
+          <small>Incluye inversión con cero resultados</small>
+        </article>
+        <article class="bridge-capability">
+          <header><span>96.4</span><b>Seguimiento</b></header>
           <h3>Una hoja compartida con el estado real</h3>
-          <p>Cada ciclo escribe cliente, cuenta, plataforma, campaña, KPI, valor de la semana anterior y de la actual, variación, estado, tipo de alerta y fechas del incidente. Los incidentes abiertos se conservan hasta resolverse.</p>
-        </div>
-        <div class="card" data-tab="Presupuesto">
-          <span class="card-index">96.5 · PRESUPUESTO</span>
+          <p>Cada ciclo registra cliente, cuenta, plataforma, campaña, KPI, variación, estado, tipo de alerta y fechas. Los incidentes abiertos permanecen hasta resolverse.</p>
+          <small>Fuente compartida de estado</small>
+        </article>
+        <article class="bridge-capability">
+          <header><span>96.5</span><b>Presupuesto</b></header>
           <h3>Cambiar el diario sin entrar a la plataforma</h3>
-          <p>Consulta de consumo y ajuste de presupuesto diario o total. El comando simula siempre; aplicar el cambio real exige una instrucción explícita de ejecución.</p>
-        </div>
-        <div class="card" data-tab="Agentes">
-          <span class="card-index">96.6 · AGENTES</span>
+          <p>Consulta de consumo y ajuste de presupuesto diario o total. El comando simula siempre; aplicar exige una instrucción explícita.</p>
+          <small>Dry-run por defecto</small>
+        </article>
+        <article class="bridge-capability">
+          <header><span>96.6</span><b>Agentes</b></header>
           <h3>Preguntar en lenguaje natural</h3>
-          <p>Dos servidores locales exponen la cuenta a un agente: uno solo de lectura, para consultar y diagnosticar; otro que además puede pausar, cambiar estado y ajustar presupuesto, siempre en simulación mientras no se confirme.</p>
-        </div>
+          <p>Un servidor consulta y diagnostica; otro puede pausar, cambiar estado y ajustar presupuesto, siempre en simulación mientras no se confirme.</p>
+          <small>Lectura · propuesta · ejecución confirmada</small>
+        </article>
       </div>
 
-      <div class="card sep-md" data-reveal>
-        <span class="card-index">96.7 · DÓNDE QUEDA LO QUE PRODUCE</span>
-        <h3>El entregable sale de la herramienta, siempre</h3>
-        <p class="sep-xs">Los informes y archivos que genera Media Bridge se enrutan al repositorio del cliente o a una carpeta de salida; la herramienta impide guardarlos dentro de sí misma. Es la misma lógica del punto 58: la fuente única de verdad es el repositorio, no la herramienta que produjo el archivo.</p>
-        <p class="quote quote-sm sep-md">Lo que solo existe dentro de la herramienta todavía no está documentado.<small>Extensión de la regla 81 · 12</small></p>
+      <div class="bridge-output sep-md" data-reveal>
+        <div><span class="card-index">96.7 · DÓNDE QUEDA LO QUE PRODUCE</span><h3>El entregable sale de la herramienta, siempre</h3></div>
+        <p>Los informes y archivos se enrutan al repositorio del cliente o a una carpeta de salida. La fuente única de verdad es el repositorio, no la herramienta que produjo el archivo.</p>
+        <p class="quote quote-sm">Lo que solo existe dentro de la herramienta todavía no está documentado.<small>Extensión de la regla 81 · 12</small></p>
       </div>
     </div>
 
@@ -3184,19 +3280,19 @@
           <span class="card-index">97.1 · NIVEL 1 · CONSULTAR</span>
           <h4>Lee y reporta. No toca nada.</h4>
           <p>Consultas, insights, informes y análisis conversacional de solo lectura.</p>
-          <ul class="chips sep"><li>Cualquiera del equipo</li><li>Sin aprobación</li></ul>
+          <p class="escala-nota">Cualquiera del equipo · sin aprobación</p>
         </div>
         <div class="card" style="--nivel:2">
           <span class="card-index">97.2 · NIVEL 2 · PROPONER</span>
           <h4>Señala y simula. No aplica.</h4>
           <p>Alertas, diagnósticos y cambios en modo simulación. La herramienta muestra qué haría y qué efecto tendría.</p>
-          <ul class="chips sep"><li>Trafficker o planner</li><li>Auditor asignado</li></ul>
+          <p class="escala-nota">Trafficker o planner · auditor asignado</p>
         </div>
         <div class="card" style="--nivel:3">
           <span class="card-index">97.3 · NIVEL 3 · EJECUTAR</span>
           <h4>Aplica el cambio en la plataforma.</h4>
-          <p>Pausar, cambiar estado o mover presupuesto de verdad. Exige una confirmación explícita en el momento, no una configuración dejada previamente.</p>
-          <ul class="chips sep"><li>Firma nominal</li><li>Registro en bitácora (88)</li></ul>
+          <p>Pausar, cambiar estado o mover presupuesto exige confirmación explícita en el momento.</p>
+          <p class="escala-nota">Firma nominal · registro en bitácora (88)</p>
         </div>
       </div>
 
@@ -3224,41 +3320,22 @@
         <p>La automatización no elimina el trabajo de criterio: lo desplaza. Lo que antes era ejecutar ahora es verificar, y verificar mal es más grave que ejecutar mal, porque el error se multiplica por todas las cuentas donde corre la misma regla.</p>
       </div>
 
-      <div class="notas sep-lg" data-reveal>
-        <div class="card">
-          <span class="card-index">98.1 · QUIÉN ES</span>
-          <h3>Un nombre por cuenta, no un rol difuso</h3>
-          <p class="sep-xs">El auditor de una cuenta es su responsable en el tablero de distribución (93). No hay un auditor general de la IA: hay una persona por cuenta que responde por las reglas que corren sobre ella y por lo que esas reglas producen.</p>
-          <p class="panel-label sep-lg">La Dirección Digital audita aparte</p>
-          <p style="font-size:var(--fs-ui);color:var(--fg-muted);margin:0">Las reglas transversales —las que se aplican a todos los clientes a la vez— y los cambios en los umbrales comunes se revisan en Dirección, porque un error ahí no afecta una cuenta: afecta el portafolio.</p>
-        </div>
-        <div class="card">
-          <span class="card-index">98.2 · QUÉ NO DELEGA</span>
-          <h3>Cinco cosas que no se firman sin leerlas</h3>
-          <ul class="list-check list-cross sep">
-            <li>Aceptar una causa que propuso el modelo sin contrastarla con el contexto (36).</li>
-            <li>Aprobar un cambio de presupuesto que altera un compromiso con el cliente.</li>
-            <li>Enviar un informe generado sin haberlo leído completo.</li>
-            <li>Dejar activa una regla que ya produjo dos falsos positivos seguidos.</li>
-            <li>Confirmar una acción sobre un objeto que no verificó que fuera el correcto.</li>
-          </ul>
-        </div>
+      <div class="auditor-map" data-reveal>
+        <div class="auditor-core"><span class="card-index">98.1 · QUIÉN ES</span><strong>Un nombre por cuenta</strong><p>El auditor responde por las reglas que corren sobre ella y por lo que producen. No hay un auditor general de la IA.</p></div>
+        <div class="auditor-scope"><span>Cuenta</span><b>Auditor asignado</b><small>Tablero de distribución (93)</small></div>
+        <div class="auditor-scope auditor-scope-wide"><span>Dirección Digital</span><b>Audita lo transversal</b><small>Reglas comunes y umbrales que afectan al portafolio completo.</small></div>
+        <div class="auditor-nondelegate"><span class="card-index">98.2 · QUÉ NO DELEGA</span><h3>Cinco decisiones que se leen antes de firmar</h3><ol><li>Aceptar una causa sin contrastarla con el contexto.</li><li>Aprobar presupuesto que altera un compromiso.</li><li>Enviar un informe generado sin leerlo completo.</li><li>Dejar activa una regla con falsos positivos.</li><li>Confirmar un objeto que no verificó.</li></ol></div>
       </div>
 
       <h3 class="sub-heading" data-reveal style="margin-top:clamp(38px,4vw,60px)"><span class="num">98.3</span> Los cinco controles del auditor</h3>
       <p data-reveal style="margin-top:-6px;color:var(--fg-muted);max-width:70ch">La auditoría no es un momento al final. Son cinco puntos distintos del ciclo, y cada uno tiene una consecuencia concreta si nadie lo hace.</p>
-      <div class="table-wrap sep-md" data-reveal>
-        <table>
-          <thead><tr><th>Momento</th><th>Qué revisa</th><th>Si nadie lo revisa</th></tr></thead>
-          <tbody>
-            <tr><td><b>Antes de crear la regla</b></td><td>Que el KPI, el umbral, la ventana de comparación y la cuenta correspondan a cómo se lee realmente esa cuenta.</td><td>La alerta genera ruido y el equipo aprende a ignorar el canal. Una alerta desatendida es peor que ninguna.</td></tr>
-            <tr><td><b>Antes de concluir</b></td><td>Volumen suficiente, ventana completa, retrasos de atribución y cambios recientes de tracking o de estructura.</td><td>Se optimiza sobre una variación que no existe. Es exactamente lo que el punto 35 busca evitar.</td></tr>
-            <tr><td><b>Antes de ejecutar</b></td><td>Que la acción corresponda a la hipótesis declarada y que el objeto —campaña, conjunto o anuncio— sea el correcto.</td><td>Se pausa lo que no era, o se mueve presupuesto comprometido. El error es inmediato y visible para el cliente.</td></tr>
-            <tr><td><b>Antes de que salga al cliente</b></td><td>Que el texto generado coincida con lo que realmente pasó en la cuenta y en el negocio, no con lo que el modelo infirió del dato.</td><td>Se comunica una causa inventada. El costo no es el error: es que el cliente deje de creerle al informe.</td></tr>
-            <tr><td><b>Después</b></td><td>Qué propuso la herramienta, qué se aprobó, qué se rechazó y por qué.</td><td>La regla nunca mejora y el mismo falso positivo se repite cada semana.</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <ol class="auditor-controls sep-md" data-reveal aria-label="Cinco controles del auditor">
+        <li><span>01</span><div><b>Antes de crear la regla</b><p>KPI, umbral, ventana y cuenta deben corresponder a cómo se lee realmente.</p></div><small>Si falla: la alerta genera ruido y se ignora.</small></li>
+        <li><span>02</span><div><b>Antes de concluir</b><p>Volumen suficiente, ventana completa, retrasos de señal y cambios recientes de tracking.</p></div><small>Si falla: se optimiza sobre una variación inexistente.</small></li>
+        <li><span>03</span><div><b>Antes de ejecutar</b><p>La acción debe corresponder a la hipótesis y al objeto correcto.</p></div><small>Si falla: se pausa lo que no era o se mueve presupuesto comprometido.</small></li>
+        <li><span>04</span><div><b>Antes de salir al cliente</b><p>El texto generado debe coincidir con lo que pasó en cuenta y negocio.</p></div><small>Si falla: se comunica una causa inventada.</small></li>
+        <li><span>05</span><div><b>Después</b><p>Se registra qué propuso la herramienta, qué se aprobó, qué se rechazó y por qué.</p></div><small>Si falla: el falso positivo se repite cada semana.</small></li>
+      </ol>
 
       <div class="notas sep-lg" data-reveal>
         <div class="card">
@@ -3346,18 +3423,18 @@
       <div class="section-heading" data-reveal>
         <div>
           <p class="eyebrow"><span>83.1</span></p>
-          <h2>Roadmap de madurez de medición</h2>
-          <p class="claim">No prometemos hoy <em>la capacidad de mañana.</em></p>
+          <h2>Roadmap de madurez de señal</h2>
+          <p class="claim">De la señal disponible hoy a <em>decisiones más completas.</em></p>
         </div>
-        <p>Atribución, incrementalidad y MMM responden preguntas distintas. El framework las ordena como evolución, no como una capacidad que Adcom ya opere de forma recurrente.</p>
+        <p>La operación actual parte de Pixel + API. El siguiente salto es conectar First-Party Data con la pauta para mejorar la calidad de señal, el aprendizaje y las decisiones de negocio.</p>
       </div>
 
       <ol class="linea" data-reveal>
         <li class="card">
           <span class="card-index">HOY · OPERACIÓN</span>
-          <h3>Atribución para decidir dentro de plataforma</h3>
-          <p class="sep-sm">Pixel o etiqueta, APIs, analítica y convenciones de atribución ayudan a optimizar campañas, anuncios, keywords, creatividades y landings.</p>
-          <p class="quote quote-sm sep-md">Útil para operar no significa causal.<small>La plataforma reporta crédito, no el contrafactual.</small></p>
+          <h3>Pixel + API como base</h3>
+          <p class="sep-sm">Eventos, etiquetas, APIs, analítica y convenciones de plataforma sostienen la optimización cotidiana de campañas, anuncios, keywords, creatividades y landings.</p>
+          <ul class="chips chips-accent sep"><li>Eventos</li><li>UTM</li><li>API</li><li>Calidad</li><li>QA</li></ul>
         </li>
         <li class="card">
           <span class="card-index">SIGUIENTE · CALIDAD DE SEÑAL</span>
@@ -3366,25 +3443,12 @@
           <ul class="chips chips-accent sep"><li>Identidad</li><li>Calidad</li><li>Valor</li><li>Gobierno</li><li>Feedback</li></ul>
         </li>
         <li class="card">
-          <span class="card-index">FUTURO · MEDICIÓN CAUSAL</span>
-          <h3>Incrementalidad y MMM</h3>
-          <p class="sep-sm">Cuando existan datos, variación y capacidad analítica suficientes, los experimentos de lift podrán aproximar causalidad y calibrar modelos de asignación presupuestaria.</p>
-          <ul class="chips chips-accent sep"><li>Holdouts / geo tests</li><li>MMM</li><li>ROI incremental</li><li>mROI</li><li>Saturación</li><li>Curvas de respuesta</li></ul>
+          <span class="card-index">ORDEN DE CONSTRUCCIÓN</span>
+          <h3>Señal propia → decisiones</h3>
+          <p class="sep-sm">La ruta es asegurar fuentes confiables, documentar límites, conectar estados de negocio y devolver aprendizajes a la operación de medios.</p>
+          <ul class="chips chips-accent sep"><li>Fuente</li><li>Permisos</li><li>Estados</li><li>Valor</li><li>Aprendizaje</li></ul>
         </li>
       </ol>
-
-      <div class="notas sep-lg" data-reveal>
-        <div class="card">
-          <span class="card-index">FRONTERA DE SERVICIO</span>
-          <h3>Incrementalidad y MMM no son hoy un entregable estándar</h3>
-          <p class="sep-sm">Antes de ofrecerlos se necesitan series históricas confiables, inversión con variación suficiente, resultados de negocio comparables, variables de contexto y un proceso de validación. Sin esas condiciones, el modelo produce precisión aparente.</p>
-        </div>
-        <div class="card">
-          <span class="card-index">ORDEN DE CONSTRUCCIÓN</span>
-          <h3>Primero señal; después experimentación; luego modelado</h3>
-          <p class="sep-sm">La ruta es acumular datos propios confiables, profesionalizar el repositorio de experimentos y seleccionar casos con volumen adecuado. Solo entonces tiene sentido evaluar incrementality tests o MMM.</p>
-        </div>
-      </div>
     </div>
 
     <div class="divider" id="criterio-exito">

@@ -13,6 +13,15 @@
 
   /* ---------- reveal on scroll ---------- */
   var revealables = $$("[data-reveal]");
+  /* Stagger inspirado en inView/stagger: cada grupo entra como una secuencia
+     legible, no como una pared de tarjetas que aparece al mismo tiempo. */
+  var staggerGroups = $$(".grid-2[data-reveal],.grid-3[data-reveal],.phases[data-reveal],.pillars[data-reveal],.split[data-reveal],.quadrant[data-reveal],.tesis[data-reveal],.notas[data-reveal],.columnas[data-reveal],.linea[data-reveal]");
+  staggerGroups.forEach(function(group){
+    group.classList.add("motion-stagger");
+    Array.prototype.forEach.call(group.children, function(child, i){
+      child.style.setProperty("--stagger-delay", (i * 55) + "ms");
+    });
+  });
   if ("IntersectionObserver" in window){
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
@@ -75,6 +84,11 @@
   var headerSearch = $("#header-search"), globalSearch = $("#q");
   if (headerSearch && globalSearch){
     headerSearch.addEventListener("click", function(){
+      var commandDialog = $("#command-dialog");
+      if (commandDialog && typeof commandDialog.showModal === "function"){
+        document.dispatchEvent(new CustomEvent("open-command"));
+        return;
+      }
       if (header && header.classList.contains("nav-abierto")){
         header.classList.remove("nav-abierto");
         toggle.setAttribute("aria-expanded","false");
@@ -275,9 +289,31 @@
   }
   setRepo(0);
 
+  /* Motion-style view transitions for native details. The DOM remains native
+     and accessible; supported browsers animate the layout, others toggle as usual. */
+  function enlazarDetalleMotion(detail, siblings){
+    var summary = detail && detail.querySelector ? detail.querySelector("summary") : null;
+    if (!summary) return;
+    summary.addEventListener("click", function(e){
+      if (e.target.closest && e.target.closest("a")) return;
+      e.preventDefault();
+      var next = !detail.open;
+      FD.viewTransition(function(){
+        detail.open = next;
+        if (next && siblings) siblings.forEach(function(other){ if (other !== detail) other.open = false; });
+      });
+    });
+  }
+
   /* ---------- acordeón exclusivo de interfaces ---------- */
+  document.addEventListener("pointerdown", function(e){
+    var target = e.target && e.target.closest ? e.target.closest("button,[role=\"tab\"],summary") : null;
+    if (target) FD.pressSpring(target);
+  }, {passive:true});
+
   var ifaces = $$(".iface");
   ifaces.forEach(function(d){
+    enlazarDetalleMotion(d, ifaces);
     d.addEventListener("toggle", function(){
       if (d.open) ifaces.forEach(function(o){ if(o!==d) o.open = false; });
     });
@@ -573,7 +609,9 @@
       $("#sol-pregunta").textContent = x.pregunta;
       fillList($("#sol-min"), x.min);
       fillChips($("#sol-des"), x.des);
-      $("#sol-sale").textContent = x.sale + " · " + x.horas;
+      $("#sol-sale").textContent = x.sale;
+      var sla = $("#sol-sla");
+      if (sla) sla.textContent = x.sla;
       $("#sol-conecta").textContent = x.conecta;
       $("#sol-nota").textContent = x.nota;
       $$("#sol-list .repo-item").forEach(function(b, k){
@@ -613,7 +651,7 @@
       l.push("SUMA VALOR (opcional)");
       x.des.forEach(function(d){ l.push("- " + d + ":"); });
       l.push("");
-      l.push("Entregable esperado: " + x.sale + " · tiempo de gestión estimado: " + x.horas);
+      l.push("Entregable esperado: " + x.sale + " · SLA estimado: " + x.sla);
       return l.join("\n");
     }
     $("#sol-copy").addEventListener("click", function(){
@@ -742,6 +780,11 @@
       var atajo = (e.key === "/" && !en) || ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K"));
       if (!atajo) return;
       e.preventDefault();
+      var commandDialog = $("#command-dialog");
+      if (commandDialog && typeof commandDialog.showModal === "function"){
+        document.dispatchEvent(new CustomEvent("open-command"));
+        return;
+      }
       campo.scrollIntoView({ behavior: FD.menosMovimiento() ? "auto" : "smooth", block: "center" });
       campo.focus(); campo.select();
     });
@@ -749,5 +792,65 @@
     /* llegar con ?q= ya buscando */
     var q = (location.search.match(/[?&]q=([^&]*)/) || [])[1];
     if (q){ campo.value = decodeURIComponent(q.replace(/\+/g," ")); buscar(); }
+  })();
+
+  /* ---------- command palette · CommandDialog sin dependencia ---------- */
+  (function(){
+    var dialog = $("#command-dialog"), input = $("#command-q"), results = $("#command-results");
+    if (!dialog || !input || !results) return;
+    var globalSearch = $("#q"), globalResults = $("#q-res"), close = $("#command-close");
+
+    function syncResults(){
+      if (!globalResults) return;
+      results.innerHTML = globalResults.innerHTML;
+      if (!input.value.trim()) results.innerHTML = '<p class="q-vacio">Escribe una palabra para buscar. También puedes ir directo a una sección.</p>';
+    }
+    function open(){
+      if (dialog.open) return;
+      if (globalSearch) input.value = globalSearch.value;
+      if (typeof dialog.showModal === "function") dialog.showModal();
+      else dialog.setAttribute("open", "");
+      syncResults();
+      window.setTimeout(function(){ input.focus(); input.select(); }, 0);
+    }
+    function shut(){
+      if (typeof dialog.close === "function") dialog.close();
+      else dialog.removeAttribute("open");
+    }
+    document.addEventListener("open-command", open);
+    close.addEventListener("click", shut);
+    dialog.addEventListener("click", function(e){ if (e.target === dialog) shut(); });
+    input.addEventListener("input", function(){
+      if (globalSearch){
+        globalSearch.value = input.value;
+        globalSearch.dispatchEvent(new Event("input", {bubbles:true}));
+      }
+      window.setTimeout(syncResults, 145);
+    });
+    input.addEventListener("keydown", function(e){
+      if (e.key === "Escape"){ e.preventDefault(); shut(); return; }
+      var items = $$('a', results);
+      if (!items.length) return;
+      var active = items.indexOf(document.activeElement);
+      if (e.key === "ArrowDown" || e.key === "ArrowUp"){
+        e.preventDefault();
+        active += e.key === "ArrowDown" ? 1 : -1;
+        if (active < 0) active = items.length - 1;
+        if (active >= items.length) active = 0;
+        items[active].focus();
+      } else if (e.key === "Enter"){
+        e.preventDefault();
+        items[active >= 0 ? active : 0].click();
+      }
+    });
+    results.addEventListener("click", function(e){ if (e.target.closest("a")) shut(); });
+    var shortcuts = $$(".command-shortcuts a");
+    shortcuts.forEach(function(a){ a.addEventListener("click", shut); });
+    document.addEventListener("keydown", function(e){
+      if (!dialog.open || !(e.metaKey || e.ctrlKey) || !/^[1-4]$/.test(e.key)) return;
+      e.preventDefault();
+      if (shortcuts[Number(e.key) - 1]) shortcuts[Number(e.key) - 1].click();
+    });
+    dialog.addEventListener("close", function(){ if (globalSearch) globalSearch.value = input.value; });
   })();
 })();

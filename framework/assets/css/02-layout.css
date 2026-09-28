@@ -56,6 +56,45 @@
   .site-header nav{grid-template-columns:1fr}
 }
 
+/* ---------- command palette · patrón CommandDialog ---------- */
+.command-dialog{width:min(680px,calc(100vw - 28px));max-width:none;padding:0;border:1px solid rgba(255,212,0,.42);border-radius:18px;background:transparent;color:var(--fg);box-shadow:0 28px 100px rgba(0,0,0,.55);overflow:hidden}
+.command-dialog::backdrop{background:rgba(3,3,3,.7);backdrop-filter:blur(8px)}
+.command-panel{background:var(--surface);border:1px solid var(--line);border-radius:inherit;overflow:hidden}
+.command-head{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding:22px 24px 14px}
+.command-kicker{margin:0 0 5px;color:var(--accent-ink);font-size:var(--fs-label);font-weight:900;letter-spacing:var(--tk-label);text-transform:uppercase}
+.command-head h2{margin:0;font-size:var(--fs-h3);line-height:1.1;letter-spacing:var(--tk-h)}
+.command-close{min-width:42px;height:30px;padding:0 9px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface-2);color:var(--fg-muted);font:700 var(--fs-label)/1 inherit;cursor:pointer}
+.command-close:hover,.command-close:focus-visible{border-color:var(--accent-ink);color:var(--fg);outline:none}
+.command-input-wrap{display:flex;align-items:center;gap:12px;margin:0 14px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--ink);transition:border-color .18s ease,box-shadow .18s ease}
+.command-input-wrap:focus-within{border-color:var(--accent-ink);box-shadow:0 0 0 3px rgba(255,212,0,.13)}
+.command-input-wrap .ico{width:18px;height:18px;color:var(--accent-ink);flex:0 0 auto}
+.command-input-wrap input{width:100%;height:52px;border:0;outline:0;background:transparent;color:var(--fg);font:600 var(--fs-body)/1.2 inherit;letter-spacing:var(--tk-body)}
+.command-input-wrap input::placeholder{color:var(--fg-muted)}
+.command-input-wrap kbd,.command-shortcuts kbd{padding:3px 7px;border:1px solid var(--line);border-radius:6px;color:var(--fg-muted);font:700 var(--fs-label)/1.2 inherit;white-space:nowrap}
+.command-shortcuts{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:14px 24px;border-bottom:1px solid var(--line)}
+.command-group-label{width:100%;margin-bottom:3px;color:var(--fg-muted);font-size:var(--fs-label);font-weight:800;letter-spacing:var(--tk-label);text-transform:uppercase}
+.command-shortcuts a{display:inline-flex;align-items:center;gap:7px;padding:7px 9px;border:1px solid transparent;border-radius:8px;color:var(--fg-muted);font-size:var(--fs-ui);font-weight:700;text-decoration:none;transition:background .16s ease,border-color .16s ease,color .16s ease}
+.command-shortcuts a:hover,.command-shortcuts a:focus-visible{border-color:var(--line);background:var(--surface-2);color:var(--fg);outline:none}
+.command-icon{display:grid;place-items:center;width:22px;height:22px;border-radius:6px;background:rgba(255,212,0,.12);color:var(--accent-ink);font-weight:900}
+.command-results{max-height:min(46vh,390px);overflow:auto;padding:8px 10px}
+.command-results:empty{display:none}
+.command-results ol{display:grid;gap:2px;margin:0;padding:0;list-style:none}
+.command-results li a{display:grid;gap:4px;padding:11px 14px;border:1px solid transparent;border-radius:9px;color:var(--fg);text-decoration:none;transition:background .16s ease,border-color .16s ease}
+.command-results li a:hover,.command-results li a:focus-visible{border-color:var(--line);background:var(--surface-2);outline:none}
+.command-results li a b{font-size:var(--fs-ui);font-weight:700;line-height:var(--lh-ui)}
+.command-results li a mark{background:rgba(255,212,0,.3);color:var(--fg);border-radius:2px;padding:0 2px}
+.command-results .q-sec{color:var(--accent-ink);font-size:var(--fs-label);font-weight:800;letter-spacing:var(--tk-label)}
+.command-results .q-vacio{margin:0;padding:18px 14px;color:var(--fg-muted);font-size:var(--fs-ui)}
+.command-foot{display:flex;gap:16px;padding:10px 24px;border-top:1px solid var(--line);color:var(--fg-muted);font-size:var(--fs-label)}
+@media(max-width:560px){
+  .command-dialog{width:calc(100vw - 18px)}
+  .command-head{padding-inline:18px}
+  .command-shortcuts{padding-inline:18px}
+  .command-input-wrap{margin-inline:10px}
+  .command-foot{padding-inline:18px}
+  .command-shortcuts a{flex:1 1 calc(50% - 6px)}
+}
+
 /* ---------- hero ---------- */
 /* ---------- hero como espacio de trabajo ----------
    La propuesta y la herramienta comparten la primera pantalla. La consola es

@@ -37,6 +37,8 @@ body{
 
 /* ---------- todo visible: en papel no hay scroll que dispare la animación ---------- */
 [data-reveal]{opacity:1 !important;transform:none !important}
+/* la entrada escalonada deja a los hijos en opacity:0 hasta que el grupo se ve en pantalla */
+.motion-stagger>*{opacity:1 !important;transform:none !important;animation:none !important}
 
 /* ---------- todo sobre blanco ---------- */
 .section-dark,

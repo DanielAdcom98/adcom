@@ -156,6 +156,9 @@ contenedor, no reescribir las tarjetas.
 - **Barra en tabla** (`span.barra` con `style="--v:.66"`): solo para una cifra real, con el valor escrito
   al lado. Si un valor no cabe en la escala (por ejemplo días frente a horas), usa `barra-fuera` y dilo.
   No inventes cifras para tener un gráfico.
+- **Rango en tabla** (`span.rango` con `style="--a:1;--m:2;--b:4"`, escala de 0 a 7): de un mínimo
+  a un máximo, con un punto en el valor medio. Es el de la tabla del punto 86 (días por complejidad).
+  Las cifras siguen en sus columnas: la barra es la lectura rápida, no la única.
 - **La tarjeta sola sigue sirviendo** cuando cada una es una entidad completa y distinta (los tres
   roles del equipo) o cuando es un enlace (las fichas del resumen).
 
@@ -235,7 +238,7 @@ campañas `c` y su responsable `r`, que debe coincidir con un `id` de `equipo`).
 `FD.SOLICITUDES` es la puerta de entrada del área: un objeto por tipo de solicitud.
 
 ```js
-{c:"94.4", t:"Informe", sale:"Informe con acciones derivadas", horas:"2 horas",
+{c:"94.4", t:"Informe", sale:"Informe con acciones derivadas", sla:"1 a 3 días hábiles",
  pregunta:"¿Qué decisión va a soportar este informe?",
  min:["Objetivo del informe: qué decisión debe habilitar", "…"],   // sin esto se devuelve
  des:["Preguntas concretas que se esperan responder", "…"],        // suma, no bloquea
@@ -246,7 +249,7 @@ campañas `c` y su responsable `r`, que debe coincidir con un `id` de `equipo`).
 - **`min` es la lista que bloquea.** Antes de agregar algo ahí, pregúntate si de verdad impide
   empezar. Todo lo que ayuda pero no impide va en `des`; si `min` crece sin control, la puerta deja
   de usarse y la gente vuelve a pedir por chat.
-- **`horas` y `sale` deben coincidir con la tabla del punto 86.** Si cambias uno, cambia el otro.
+- **`sla` y `sale` deben coincidir con la tabla del punto 86.** Si cambias uno, cambia el otro.
 - El botón *Copiar plantilla* arma el texto desde estos mismos campos, así que no hay una plantilla
   aparte que se pueda desactualizar.
 
